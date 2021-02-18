@@ -1,7 +1,9 @@
 <template>
-  <div class="home">
-    <h1>Pretty printed</h1>
-    <h2>In development</h2>
+  <div id="particle-container">
+    <div
+        class="particle"
+        v-for="i in 30"
+    ></div>
   </div>
 </template>
 
@@ -11,3 +13,34 @@ export default {
   name: 'Home',
 }
 </script>
+
+<style lang="scss">
+#particle-container {
+  position: relative;
+}
+
+.particle {
+  position: absolute;
+  //border-radius: 50%;
+}
+
+@for $i from 1 through 30 {
+  @keyframes particle-animation-#{$i} {
+    100% {
+      transform: translate3d((random(90) * 1vw), (random(90) * 1vh), (random(100) * 1px));
+    }
+  }
+
+  .particle:nth-child(#{$i}){
+    animation: particle-animation-#{$i} 60s infinite;
+    $size: random(5) + 55 + px;
+    opacity: random(100)/100;
+    height: $size;
+    width: $size;
+    animation-delay: -$i * .2s;
+    transform: translate3d((random(90) * 1vw), (random(90) * 1vh), (random(100) * 1px));
+    background: url('../assets/img/triangle.png') no-repeat center;
+    background-size: 55px;
+  }
+}
+</style>
