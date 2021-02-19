@@ -13,6 +13,7 @@
 
       <Register
           v-if="isActiveForm('register')"
+          :errorEmail="errorEmail"
           @formHandler="formHandler"
           @registerHandler="registerHandler"
       />
@@ -31,7 +32,8 @@ export default {
   data() {
     return {
       activeForm: 'login',
-      error: false
+      error: false,
+      errorEmail: false
     }
   },
   components: {
@@ -65,9 +67,15 @@ export default {
       await http.post('/register', user)
         .then(response => {
           localStorage.setItem('jwt', JSON.stringify(response.data.jwt))
-          if(response.status === 200) this.$router.push('/')
+          if(response.status === 200) {
+            this.errorEmail = false
+            this.$router.push('/')
+          }
         })
       .catch(error => {
+        if(error.response.status === 422) {
+          this.errorEmail = true
+        }
         console.log(error.response)
       })
     }

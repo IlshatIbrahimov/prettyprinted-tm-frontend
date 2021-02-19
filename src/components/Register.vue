@@ -2,6 +2,13 @@
   <b-form @submit.stop.prevent="onSubmit">
     <h1 class="auth__title">Sign Up</h1>
 
+    <div
+        class="auth__invalid"
+        v-if="errorEmail"
+    >
+      <p>This email address already registered!</p>
+    </div>
+
     <b-form-group
         label="Name"
         label-for="name"
@@ -118,14 +125,21 @@
           id="confirm-password"
           name="confirm-password"
           type="password"
-          v-model="confirmPassword"
+          v-model="$v.user.confirmPassword.$model"
+          :state="validateState('confirmPassword')"
       ></b-form-input>
 
-      <span
+      <b-form-invalid-feedback
           id="input-confirm-password"
-          v-if="this.confirmPassword !== this.user.password && this.confirmPassword !== null"
-          class="auth__label-invalid"
-      >Those passwords didn`t match. Try again.</span>
+          v-if="!this.$v.user.confirmPassword.equalPassword"
+      >Those passwords didn`t match. Try again.
+      </b-form-invalid-feedback>
+
+      <b-form-invalid-feedback
+          id="input-confirm-password"
+          v-if="!this.$v.user['confirmPassword'].required"
+      >This field will be required!
+      </b-form-invalid-feedback>
     </b-form-group>
 
     <div class="auth__footer">
@@ -148,6 +162,8 @@
 import {validationMixin} from "vuelidate";
 import {email, maxLength, minLength, required} from "vuelidate/lib/validators";
 
+const equalPassword = (value, vm) => value === vm.password
+
 export default {
   name: 'Register',
   mixins: [validationMixin],
@@ -157,29 +173,39 @@ export default {
         name: '',
         surname: '',
         email: '',
-        password: ''
+        password: '',
+        confirmPassword: null
       },
-      confirmPassword: null
     };
+  },
+  props: {
+    errorEmail: {
+      type: Boolean,
+      default: false
+    }
   },
   validations: {
     user: {
       name: {
+        maxLength: maxLength(30),
         required,
-        maxLength: maxLength(30)
       },
       surname: {
+        maxLength: maxLength(30),
         required,
-        maxLength: maxLength(30)
       },
       email: {
         email,
         required
       },
       password: {
-        required,
         minLength: minLength(8),
-        maxLength: maxLength(50)
+        maxLength: maxLength(50),
+        required
+      },
+      confirmPassword: {
+        required,
+        equalPassword
       }
     },
   },
@@ -197,13 +223,19 @@ export default {
         return;
       }
 
-      this.$emit('registerHandler', this.user)
+      this.$emit('registerHandler', {
+        name: this.user.name,
+        surname: this.user.surname,
+        email: this.user.email,
+        password: this.user.password,
+      })
 
       this.user = {
         name: '',
         surname: '',
         email: '',
-        password: ''
+        password: '',
+        confirmPassword: null
       };
 
       this.$nextTick(() => {
