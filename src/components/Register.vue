@@ -22,12 +22,6 @@
 
       <b-form-invalid-feedback
           id="input-name"
-          v-else-if="!this.$v.user['name'].minLength"
-      >This field will have min length 4 characters!
-      </b-form-invalid-feedback>
-
-      <b-form-invalid-feedback
-          id="input-name"
           v-else-if="!this.$v.user['name'].maxLength"
       >This field will have max length 30 characters!
       </b-form-invalid-feedback>
@@ -49,12 +43,6 @@
           id="input-surname"
           v-if="!this.$v.user['surname'].required"
       >This field will be required!
-      </b-form-invalid-feedback>
-
-      <b-form-invalid-feedback
-          id="input-email"
-          v-else-if="!this.$v.user['surname'].minLength"
-      >This field will have min length 4 characters!
       </b-form-invalid-feedback>
 
       <b-form-invalid-feedback
@@ -121,15 +109,36 @@
       </b-form-invalid-feedback>
     </b-form-group>
 
+    <b-form-group
+        label="Confirm password"
+        label-for="confirm-password"
+        label-class="auth__label"
+    >
+      <b-form-input
+          id="confirm-password"
+          name="confirm-password"
+          type="password"
+          v-model="confirmPassword"
+      ></b-form-input>
+
+      <span
+          id="input-confirm-password"
+          v-if="this.confirmPassword !== this.user.password && this.confirmPassword !== null"
+          class="auth__label-invalid"
+      >Those passwords didn`t match. Try again.</span>
+    </b-form-group>
+
     <div class="auth__footer">
       <b-button
           type="submit"
           class="auth__btn"
-      >Register</b-button>
+      >Register
+      </b-button>
 
-      <button
+      <span
+          class="auth__switch"
           @click="formHandler('register')"
-      >Log In</button>
+      >Log In</span>
     </div>
   </b-form>
 </template>
@@ -149,19 +158,18 @@ export default {
         surname: '',
         email: '',
         password: ''
-      }
+      },
+      confirmPassword: null
     };
   },
   validations: {
     user: {
       name: {
         required,
-        minLength: minLength(4),
         maxLength: maxLength(30)
       },
       surname: {
         required,
-        minLength: minLength(4),
         maxLength: maxLength(30)
       },
       email: {
@@ -173,7 +181,7 @@ export default {
         minLength: minLength(8),
         maxLength: maxLength(50)
       }
-    }
+    },
   },
   methods: {
     formHandler(form) {

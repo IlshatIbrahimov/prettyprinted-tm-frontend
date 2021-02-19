@@ -45,19 +45,14 @@
           v-if="!this.$v.user['password'].required"
       >This field will be required!
       </b-form-invalid-feedback>
-
-      <b-form-invalid-feedback
-          id="input-password"
-          v-else-if="!this.$v.user['password'].minLength"
-      >This field will have min 8 characters!
-      </b-form-invalid-feedback>
-
-      <b-form-invalid-feedback
-          id="input-password"
-          v-else-if="!this.$v.user['password'].maxLength"
-      >This field will have max 30 characters!
-      </b-form-invalid-feedback>
     </b-form-group>
+
+    <div
+        class="auth__invalid"
+        v-if="error"
+    >
+      <p>Wrong credentials <br> Invalid username or password</p>
+    </div>
 
     <div class="auth__footer">
       <b-button
@@ -65,9 +60,10 @@
           class="auth__btn"
       >Log In</b-button>
 
-      <button
+      <span
+          class="auth__switch"
           @click="formHandler('login')"
-      >Register</button>
+      >Register</span>
     </div>
   </b-form>
 </template>
@@ -78,6 +74,12 @@ import {email, maxLength, minLength, required} from "vuelidate/lib/validators";
 
 export default {
   name: 'Login',
+  props: {
+    error: {
+      type: Boolean,
+      default: false
+    }
+  },
   mixins: [validationMixin],
   data() {
     return {
@@ -95,8 +97,6 @@ export default {
       },
       password: {
         required,
-        minLength: minLength(8),
-        maxLength: maxLength(50)
       }
     }
   },

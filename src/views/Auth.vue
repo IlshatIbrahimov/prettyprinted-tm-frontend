@@ -3,8 +3,10 @@
     <div class="auth__wrapper">
 
 <!--      <img class="auth__logo" src="../assets/img/logo.png" alt="logo">-->
+
       <Login
           v-if="isActiveForm('login')"
+          :error="error"
           @formHandler="formHandler"
           @loginHandler="loginHandler"
       />
@@ -22,12 +24,14 @@
 <script>
 import Login from '@/components/Login.vue'
 import Register from '@/components/Register.vue'
+import http from '@/http-auth'
 
 export default {
   name: 'Auth',
   data() {
     return {
-      activeForm: 'register'
+      activeForm: 'login',
+      error: false
     }
   },
   components: {
@@ -41,11 +45,31 @@ export default {
     isActiveForm(form) {
       return form === this.activeForm
     },
-    loginHandler(user) {
-      console.log('Log in', user)
+    async loginHandler(user) {
+      await http.post('/auth', user)
+        .then(response => {
+          localStorage.setItem('jwt', JSON.stringify(response.data.jwt))
+          if(response.status === 200) {
+            this.error = false
+            this.$router.push('/')
+          }
+        })
+      .catch(error => {
+        if(error.response.status === 403) {
+          this.error = true
+        }
+        console.log(error.response.data.message)
+      })
     },
-    registerHandler(user) {
-      console.log('Register', user)
+    async registerHandler(user) {
+      await http.post('/register', user)
+        .then(response => {
+          localStorage.setItem('jwt', JSON.stringify(response.data.jwt))
+          if(response.status === 200) this.$router.push('/')
+        })
+      .catch(error => {
+        console.log(error.response)
+      })
     }
   }
 };

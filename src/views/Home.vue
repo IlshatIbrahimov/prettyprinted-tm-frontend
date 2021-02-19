@@ -16,7 +16,7 @@ export default {
 
 <style lang="scss">
 #particle-container {
-  position: relative;
+  position: absolute;
 }
 
 .particle {
@@ -31,16 +31,16 @@ export default {
     }
   }
 
-  .particle:nth-child(#{$i}){
+  .particle:nth-child(#{$i}) {
     animation: particle-animation-#{$i} 60s infinite;
-    $size: random(5) + 55 + px;
+    $size: random(5) + 105 + px;
     opacity: random(100)/100;
     height: $size;
     width: $size;
     animation-delay: -$i * .2s;
     transform: translate3d((random(90) * 1vw), (random(90) * 1vh), (random(100) * 1px));
-    background: url('../assets/img/triangle.png') no-repeat center;
-    background-size: 55px;
+    background: url('../assets/img/qqq.png') no-repeat center;
+    background-size: 105px;
   }
 }
 </style>

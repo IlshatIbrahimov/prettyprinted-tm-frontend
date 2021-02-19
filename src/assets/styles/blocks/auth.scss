@@ -21,10 +21,34 @@
 
   color: #555;
   text-align: center;
+
+  @media (max-width: 576px) {
+    font-size: 2.5rem;
+  }
 }
 
 .auth__wrapper {
   width: 450px;
+
+  @media (max-width: 576px) {
+    padding: 0 3rem;
+    width: 100%;
+  }
+}
+
+.auth__invalid {
+  margin-bottom: 1rem;
+  padding: 10px;
+
+  font-size: 1.1rem;
+  text-align: center;
+
+  background-color: #ffebe8;
+  border: 1px solid #dd3c10;
+
+  p {
+    margin: 0;
+  }
 }
 
 //.auth__logo {
@@ -35,6 +59,18 @@
 .auth__label {
   font-family: 'Quicksand', sans-serif;
   color: #555;
+
+  &-valid {
+    color: limegreen;
+  }
+
+  &-invalid {
+    color: #dd3c10;
+  }
+
+  @media (max-width: 576px) {
+    font-size: .9rem;
+  }
 }
 
 .auth__footer {
@@ -47,6 +83,7 @@
   background-color: #333;
   color: #fff;
   font-family: inherit;
+  font-size: 1.2rem;
 
   transition: background-color .2s linear, color .2s linear;
 
@@ -64,5 +101,26 @@
     background-color: rgba(#ace0f1, .5) !important;
     color: #333 !important;
   }
+
+  @media (max-width: 576px) {
+    font-size: 1rem;
+  }
 }
 
+.auth__switch {
+  cursor: pointer;
+
+  color: #555;
+  font-size: 1.2rem;
+  font-weight: 500;
+
+  transition: color .2s linear;
+
+  &:hover  {
+    color: rgba(#555, .5);
+  }
+
+  @media (max-width: 576px) {
+    font-size: 1rem;
+  }
+}

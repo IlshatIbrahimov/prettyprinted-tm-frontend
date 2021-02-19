@@ -3,13 +3,19 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+import authMutation from './mutations/auth.mutation'
+
+const actions = {}
+const mutations = {
+  ...authMutation,
+}
+const getters = {}
+
 export default new Vuex.Store({
   state: {
+    jwt: ''
   },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+  actions,
+  mutations,
+  getters
 })
