@@ -74,12 +74,6 @@ import {email, maxLength, minLength, required} from "vuelidate/lib/validators";
 
 export default {
   name: 'Login',
-  props: {
-    error: {
-      type: Boolean,
-      default: false
-    }
-  },
   mixins: [validationMixin],
   data() {
     return {
@@ -88,6 +82,12 @@ export default {
         password: ''
       }
     };
+  },
+  props: {
+    error: {
+      type: Boolean,
+      default: false
+    }
   },
   validations: {
     user: {
@@ -128,3 +128,4 @@ export default {
   }
 }
 </script>
+
