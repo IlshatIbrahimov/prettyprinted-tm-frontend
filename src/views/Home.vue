@@ -5,14 +5,6 @@
         v-for="i in 30"
     ></div>
   </div>
-<!--  <div style="display: flex; flex-direction: column; justify-content: center; height: 100vh;">-->
-<!--    <div style="display: flex; align-items: center; justify-content: space-between;">-->
-<!--      <div>block</div>-->
-<!--      <div>block</div>-->
-<!--      <div>block</div>-->
-<!--      <div>block</div>-->
-<!--    </div>-->
-<!--  </div>-->
 </template>
 
 <script>
