@@ -33,7 +33,7 @@ export default {
     return {
       activeForm: 'login',
       error: false,
-      errorEmail: false
+      errorEmail: false,
     }
   },
   components: {
