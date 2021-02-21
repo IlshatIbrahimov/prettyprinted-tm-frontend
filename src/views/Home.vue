@@ -1,5 +1,10 @@
 <template>
   <div id="particle-container">
+    <b-button
+        type="submit"
+        style="display: block; margin: 0 auto;"
+        @click="logout"
+    >Log Out</b-button>
     <div
         class="particle"
         v-for="i in 30"
@@ -11,17 +16,18 @@
 
 export default {
   name: 'Home',
+  methods: {
+    logout() {
+      localStorage.removeItem('jwt')
+      this.$router.push('/auth')
+    }
+  }
 }
 </script>
 
 <style lang="scss">
-#particle-container {
-  position: absolute;
-}
-
 .particle {
   position: absolute;
-  //border-radius: 50%;
 }
 
 @for $i from 1 through 30 {
