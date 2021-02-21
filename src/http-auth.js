@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'https://prettyprinted-tm-backend.herokuapp.com',
+  baseURL: 'http://localhost:8080',
   headers: {
     'Content-type': 'application/json',
-    'Access-Control-Allow-Origin': 'https://prettyprinted-tm-backend.herokuapp.com',
+    'Access-Control-Allow-Origin': 'http://localhost:8080',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
   },
 })

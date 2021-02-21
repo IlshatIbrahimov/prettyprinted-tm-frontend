@@ -1,18 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    meta: {
-      requiresAuth: true,
-    },
-    component: Home
-  },
   {
     path: '/auth',
     name: 'Auth',
@@ -20,6 +11,14 @@ const routes = [
       guest: true,
     },
     component: () => import('@/views/Auth.vue')
+  },
+  {
+    path: '/',
+    name: 'Dashboard',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('@/views/Dashboard.vue')
   }
 ]
 

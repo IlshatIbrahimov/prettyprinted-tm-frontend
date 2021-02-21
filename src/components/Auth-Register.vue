@@ -165,7 +165,7 @@ import {email, maxLength, minLength, required} from "vuelidate/lib/validators";
 const equalPassword = (value, vm) => value === vm.password
 
 export default {
-  name: 'Register',
+  name: 'Auth-Register',
   mixins: [validationMixin],
   data() {
     return {
