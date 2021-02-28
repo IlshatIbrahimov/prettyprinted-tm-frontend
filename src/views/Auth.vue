@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import Login from '@/components/Auth-Login.vue'
-import Register from '@/components/Auth-Register.vue'
-import AuthService from "@/services/AuthService"
+import Login from '@/components/AuthLogin.vue'
+import Register from '@/components/AuthRegister.vue'
+import AuthService from '@/services/AuthService'
 
 export default {
   name: 'Auth',

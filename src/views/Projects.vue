@@ -1,18 +1,34 @@
 <template>
-  <div class="dashboard">
+  <div class="project">
+
     <header class="header">
-      <h1 class="header__title">Dashboard</h1>
+      <h1
+          class="header__title"
+          :title="project.name"
+      >{{ project.name }}</h1>
+      <nav class="nav">
+        <ul class="nav__list">
+          <li
+              class="nav__list-item"
+              :class="{active: true}"
+          >Tasks</li>
+          <li
+              class="nav__list-item"
+              :class="{active: false}"
+          >Messages</li>
+        </ul>
+      </nav>
     </header>
 
-    <div class="dashboard__content tasks">
+    <div class="project__content tasks">
       <Search
           @filter="filter"
           @reset="reset"
       />
 
       <Tasks
-          v-if="Tasks.length"
-          :tasks="Tasks"
+          v-if="tasks.length"
+          :tasks="tasks"
       />
       <div
           v-else-if="flag"
@@ -24,25 +40,34 @@
         </div>
       </div>
       <div v-else>Loading...</div>
-    </div>
-  </div>
 
+      <div class="project__footer">
+        <button class="button mt-5">Add task</button>
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <script>
-import TaskService from '../services/TaskService'
+import ProjectService from '../services/ProjectService'
 import Search from '../components/Search'
-import Tasks from '../components/Tasks';
+import Tasks from '../components/Tasks'
 
 import FilterTasks from '../middlewares/filter'
 
 export default {
+  name: 'Projects',
   data() {
     return {
-      tasks: [],
-
-      flag: false,
+      project: {
+        id: null,
+        name: '',
+        taskList: []
+      },
       foundTasks: [],
+      flag: false,
+
       filterOptions: {}
     }
   },
@@ -51,15 +76,15 @@ export default {
     Tasks
   },
   methods: {
-    async getTasks() {
-      const res = await TaskService.getByAuthUser()
+    async getProject() {
+      const res = await ProjectService.getById(this.$route.params.id)
           .then(response => response)
           .catch(error => console.log(error.response))
 
-      this.tasks = res.data
+      this.project = { ...res.data }
     },
     filter(filterOptions) {
-      this.foundTasks = [...this.tasks]
+      this.foundTasks = [ ...this.project.taskList ]
       this.filterOptions[filterOptions.name] = filterOptions.valueAttr
 
       this.foundTasks = FilterTasks(this.foundTasks, this.filterOptions)
@@ -73,11 +98,11 @@ export default {
     }
   },
   mounted() {
-    this.getTasks()
+    this.getProject()
   },
   computed: {
-    Tasks() {
-      return this.foundTasks.length || this.flag ? this.foundTasks : this.tasks
+    tasks() {
+      return this.foundTasks.length || this.flag ? this.foundTasks : this.project.taskList
     }
   }
 }

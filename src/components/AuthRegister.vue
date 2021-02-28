@@ -140,6 +140,12 @@
           v-if="!this.$v.user['confirmPassword'].required"
       >This field will be required!
       </b-form-invalid-feedback>
+
+      <b-form-invalid-feedback
+          id="input-confirm-password"
+          v-else-if="!this.$v.user['confirmPassword'].minLength"
+      >This field will have min 8 characters!
+      </b-form-invalid-feedback>
     </b-form-group>
 
     <div class="auth__footer">
@@ -205,6 +211,7 @@ export default {
       },
       confirmPassword: {
         required,
+        minLength: minLength(8),
         equalPassword
       }
     },

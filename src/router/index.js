@@ -9,6 +9,7 @@ const routes = [
     name: 'Auth',
     meta: {
       guest: true,
+      layout: 'empty'
     },
     component: () => import('@/views/Auth.vue')
   },
@@ -17,9 +18,19 @@ const routes = [
     name: 'Dashboard',
     meta: {
       requiresAuth: true,
+      layout: 'main'
     },
     component: () => import('@/views/Dashboard.vue')
-  }
+  },
+  {
+    path: '/project/:id',
+    name: 'Projects',
+    meta: {
+      requiresAuth: true,
+      layout: 'main'
+    },
+    component: () => import('@/views/Projects.vue')
+  },
 ]
 
 const router = new VueRouter({
