@@ -1,26 +1,36 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    meta: {
-      requiresAuth: true,
-    },
-    component: Home
-  },
-  {
     path: '/auth',
     name: 'Auth',
     meta: {
       guest: true,
+      layout: 'empty'
     },
     component: () => import('@/views/Auth.vue')
-  }
+  },
+  {
+    path: '/',
+    name: 'Dashboard',
+    meta: {
+      requiresAuth: true,
+      layout: 'main'
+    },
+    component: () => import('@/views/Dashboard.vue')
+  },
+  {
+    path: '/project/:id',
+    name: 'Projects',
+    meta: {
+      requiresAuth: true,
+      layout: 'main'
+    },
+    component: () => import('@/views/Projects.vue')
+  },
 ]
 
 const router = new VueRouter({

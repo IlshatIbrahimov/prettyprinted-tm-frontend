@@ -69,11 +69,11 @@
 </template>
 
 <script>
-import {validationMixin} from "vuelidate";
-import {email, maxLength, minLength, required} from "vuelidate/lib/validators";
+import {validationMixin} from "vuelidate"
+import {email, required} from "vuelidate/lib/validators"
 
 export default {
-  name: 'Login',
+  name: 'Auth-Login',
   mixins: [validationMixin],
   data() {
     return {

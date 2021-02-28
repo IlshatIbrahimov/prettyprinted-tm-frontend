@@ -2,8 +2,6 @@
   <b-container class="auth">
     <div class="auth__wrapper">
 
-<!--      <img class="auth__logo" src="../assets/img/logo.png" alt="logo">-->
-
       <Login
           v-if="isActiveForm('login')"
           :error="error"
@@ -23,9 +21,9 @@
 </template>
 
 <script>
-import Login from '@/components/Login.vue'
-import Register from '@/components/Register.vue'
-import http from '@/http-auth'
+import Login from '@/components/AuthLogin.vue'
+import Register from '@/components/AuthRegister.vue'
+import AuthService from '@/services/AuthService'
 
 export default {
   name: 'Auth',
@@ -48,37 +46,35 @@ export default {
       return form === this.activeForm
     },
     async loginHandler(user) {
-      await http.post('/auth', user)
-        .then(response => {
-          localStorage.setItem('jwt', JSON.stringify(response.data.jwt))
-          if(response.status === 200) {
-            this.error = false
-            this.$router.push('/')
-          }
-        })
-      .catch(error => {
-        if(error.response.status === 403) {
-          this.error = true
-        }
-        console.log(error.response.data.message)
-      })
+      await AuthService.login(user)
+          .then(response => {
+            localStorage.setItem('jwt', JSON.stringify(response.data.jwt))
+            if (response.status === 200) {
+              this.error = false
+              this.$router.push('/')
+            }
+          })
+          .catch(error => {
+            if (error.response.status === 401) {
+              this.error = true
+            }
+          })
     },
     async registerHandler(user) {
-      await http.post('/register', user)
-        .then(response => {
-          localStorage.setItem('jwt', JSON.stringify(response.data.jwt))
-          if(response.status === 200) {
-            this.errorEmail = false
-            this.$router.push('/')
-          }
-        })
-      .catch(error => {
-        if(error.response.status === 422) {
-          this.errorEmail = true
-        }
-        console.log(error.response)
-      })
+      await AuthService.register(user)
+          .then(response => {
+            localStorage.setItem('jwt', JSON.stringify(response.data.jwt))
+            if (response.status === 200) {
+              this.errorEmail = false
+              this.$router.push('/')
+            }
+          })
+          .catch(error => {
+            if (error.response.status === 422) {
+              this.errorEmail = true
+            }
+          })
     }
   }
-};
+}
 </script>
