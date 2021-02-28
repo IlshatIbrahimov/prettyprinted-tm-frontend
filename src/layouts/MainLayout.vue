@@ -14,10 +14,12 @@
                 class="sidebar__list-item"
                 v-for="(project, idx) in projects"
                 :key="idx"
-            ><router-link
-                tag="a"
-                :to="`/project/${project.id}`"
-            >{{ project.name }}</router-link>
+            >
+              <router-link
+                  tag="a"
+                  :to="`/project/${project.id}`"
+              >{{ project.name }}
+              </router-link>
             </li>
           </ul>
           <button
@@ -36,10 +38,10 @@
                 :key="idx"
             >
               <span class="avatar">
-                <small>A</small>
-                <small>B</small>
+                <small>{{ user.name.slice(0, 1).toUpperCase() }}</small>
+                <small>{{ user.surname.slice(0, 1).toUpperCase() }}</small>
               </span>
-              <span class="sidebar__list-item-user">{{ user.name }}</span>
+              <span class="sidebar__list-item-user">{{ user.name }} {{ user.surname }}</span>
             </li>
           </ul>
         </div>
@@ -48,11 +50,11 @@
       <div class="sidebar__footer">
         <div class="sidebar__footer-avatar">
           <span class="avatar">
-            <small>М</small>
-            <small>Б</small>
+            <small>{{ getName.slice(0, 1).toUpperCase() }}</small>
+            <small>{{ getSurname.slice(0, 1).toUpperCase() }}</small>
           </span>
         </div>
-        <div class="sidebar__footer-title">Марсель Белялов</div>
+        <div class="sidebar__footer-title">{{ getName }} {{ getSurname }}</div>
         <div class="sidebar__footer-menu">
           <router-link
               class="sidebar__footer-menu--home"
@@ -102,13 +104,13 @@
             <b-form-invalid-feedback
                 id="input-projectName"
                 v-else-if="!this.$v.project['name'].minLength"
-            >This field will be min length 3 symbols.
+            >The project name must be at least 3 characters long.
             </b-form-invalid-feedback>
 
             <b-form-invalid-feedback
                 id="input-projectName"
                 v-else-if="!this.$v.project['name'].maxLength"
-            >This field will be max length 100 symbols.
+            >The project name must be at most 100 characters long.
             </b-form-invalid-feedback>
 
             <b-button
@@ -129,6 +131,7 @@
 
 <script>
 import ProjectService from "../services/ProjectService"
+import UserService from "../services/UserService";
 import {validationMixin} from "vuelidate"
 import {required, minLength, maxLength} from "vuelidate/lib/validators"
 
@@ -139,14 +142,9 @@ export default {
     return {
       projects: [],
       project: {name: ''},
-      users: [
-        {name: 'Айнур Гимадеев'},
-        {name: 'Ильшат Ибрагимов'},
-        {name: 'Ильгам Хасанов'},
-        {name: 'Вокуев Александр'},
-        {name: 'Демьянова Ульяна'},
-        {name: 'Белялов Марсель'},
-      ]
+      users: [],
+      name: '',
+      surname: ''
     }
   },
   validations: {
@@ -155,12 +153,14 @@ export default {
         required,
         minLength: minLength(3),
         maxLength: maxLength(100)
-      }
+      },
     }
   },
   methods: {
     logout() {
       localStorage.removeItem('jwt')
+      localStorage.removeItem('name')
+      localStorage.removeItem('surname')
       this.$router.push('/auth')
     },
     validateState(name) {
@@ -173,6 +173,13 @@ export default {
           .catch(error => console.log(error.response))
 
       this.projects = res.data
+    },
+    async fetchUsers() {
+      const res = await UserService.getAll()
+          .then(response => response)
+          .catch(error => console.log(error.response))
+
+      this.users = [...res.data]
     },
     async addProject(project) {
       const res = await ProjectService.addProject(project)
@@ -195,15 +202,27 @@ export default {
   },
   mounted() {
     this.fetchProjects()
+    this.fetchUsers()
+
     this.$root.$on('bv::modal::hide', () => {
-      this.$nextTick(() => { this.$v.$reset() })
+      this.$nextTick(() => {
+        this.$v.$reset()
+      })
     })
+  },
+  computed: {
+    getName() {
+      return this.name = localStorage.getItem('name')
+    },
+    getSurname() {
+      return this.surname = localStorage.getItem('surname')
+    }
   }
 }
 </script>
 
 <style lang="scss">
 .modal__btn {
-  font-size: 1.6rem!important;
+  font-size: 1.6rem !important;
 }
 </style>

@@ -49,6 +49,12 @@ export default {
       await AuthService.login(user)
           .then(response => {
             localStorage.setItem('jwt', JSON.stringify(response.data.jwt))
+            localStorage.setItem('name', response.data.user.name)
+            localStorage.setItem('surname', response.data.user.surname)
+
+            // this.$root.name = response.data.user.name
+            // this.$root.surname = response.data.user.surname
+
             if (response.status === 200) {
               this.error = false
               this.$router.push('/')
@@ -64,6 +70,9 @@ export default {
       await AuthService.register(user)
           .then(response => {
             localStorage.setItem('jwt', JSON.stringify(response.data.jwt))
+            localStorage.setItem('name', response.data.user.name)
+            localStorage.setItem('surname', response.data.user.surname)
+
             if (response.status === 200) {
               this.errorEmail = false
               this.$router.push('/')

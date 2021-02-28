@@ -1,11 +1,12 @@
 import axios from 'axios'
+import Store from './middlewares/store'
 
 export default function() {
   const config = {
-    baseURL: 'http://localhost:8080',
+    baseURL: Store.url,
     headers: {
       'Content-type': 'application/json',
-      'Access-Control-Allow-Origin': 'http://localhost:8080',
+      'Access-Control-Allow-Origin': Store.url,
       'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
       'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('jwt'))
     },

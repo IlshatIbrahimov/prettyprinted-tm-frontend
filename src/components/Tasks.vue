@@ -9,13 +9,13 @@
         <router-link
             class="tasks__list-title-id"
             tag="a"
-            :to="`/project/${ task.project }/task-${ task.id }`"
+            :to="`/project/${ task.projectId }/task-${ task.id }`"
         >task-{{ task.id }}
         </router-link>
         <router-link
             class="tasks__list-title-name"
             tag="a"
-            :to="`/project/${ task.project }/task-${ task.id }`"
+            :to="`/project/${ task.projectId }/task-${ task.id }`"
         >{{ task.name }}
         </router-link>
       </div>

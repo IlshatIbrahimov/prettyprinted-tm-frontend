@@ -88,6 +88,12 @@
     }
 
     &:last-child {
+      //max-width: 400px;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
       span {
         background-color: rgba(#ACF1F1, .5);
       }

@@ -30,7 +30,7 @@
       <b-form-invalid-feedback
           id="input-name"
           v-else-if="!this.$v.user['name'].maxLength"
-      >This field will have max length 30 characters!
+      >The name must be at most 30 characters long.
       </b-form-invalid-feedback>
     </b-form-group>
 
@@ -55,7 +55,7 @@
       <b-form-invalid-feedback
           id="input-email"
           v-else-if="!this.$v.user['surname'].maxLength"
-      >This field will have max length 30 characters!
+      >The surname must be at most 30 characters long.
       </b-form-invalid-feedback>
     </b-form-group>
 
@@ -74,13 +74,13 @@
       <b-form-invalid-feedback
           id="input-email"
           v-if="!this.$v.user['email'].required"
-      >This field will be required!
+      >This field will be required.
       </b-form-invalid-feedback>
 
       <b-form-invalid-feedback
           id="input-email"
           v-else-if="!this.$v.user['email'].email"
-      >This field will be email!
+      >Invalid email.
       </b-form-invalid-feedback>
     </b-form-group>
 
@@ -106,13 +106,13 @@
       <b-form-invalid-feedback
           id="input-password"
           v-else-if="!this.$v.user['password'].minLength"
-      >This field will have min 8 characters!
+      >The password must be at least 8 characters long.
       </b-form-invalid-feedback>
 
       <b-form-invalid-feedback
           id="input-password"
           v-else-if="!this.$v.user['password'].maxLength"
-      >This field will have max 30 characters!
+      >The password must be at most 30 characters long.
       </b-form-invalid-feedback>
     </b-form-group>
 
@@ -138,13 +138,13 @@
       <b-form-invalid-feedback
           id="input-confirm-password"
           v-if="!this.$v.user['confirmPassword'].required"
-      >This field will be required!
+      >This field will be required.
       </b-form-invalid-feedback>
 
       <b-form-invalid-feedback
           id="input-confirm-password"
           v-else-if="!this.$v.user['confirmPassword'].minLength"
-      >This field will have min 8 characters!
+      >The password must be at least 8 characters long.
       </b-form-invalid-feedback>
     </b-form-group>
 
@@ -165,8 +165,8 @@
 
 
 <script>
-import {validationMixin} from "vuelidate";
-import {email, maxLength, minLength, required} from "vuelidate/lib/validators";
+import {validationMixin} from 'vuelidate'
+import {email, maxLength, minLength, required} from 'vuelidate/lib/validators'
 
 const equalPassword = (value, vm) => value === vm.password
 
