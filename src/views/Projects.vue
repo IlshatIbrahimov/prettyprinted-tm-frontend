@@ -104,6 +104,11 @@ export default {
   mounted() {
     this.getProject()
   },
+  beforeRouteUpdate(to, from, next) {
+    this.reset()
+    next()
+    this.getProject()
+  },
   computed: {
     tasks() {
       return this.foundTasks.length || this.flag ? this.foundTasks : this.project.taskList
