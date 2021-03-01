@@ -83,7 +83,7 @@
             @submit.stop.prevent="onSubmit"
         >
           <b-form-group
-              label="Name project"
+              label="Name"
               label-for="projectName"
               label-class="project__label"
           >
