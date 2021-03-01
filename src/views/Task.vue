@@ -9,9 +9,11 @@
         <div class="task__header">
           <div class="task__header-item">
             <button
-                class="task__header-btn"
+                class="task__header-btn task__header-btn--back"
                 @click.prevent="action"
-            >back
+            >
+              <small></small>
+              <span>back</span>
             </button>
             <span class="task__header-subtitle">task-{{ task.id }}</span>
           </div>
