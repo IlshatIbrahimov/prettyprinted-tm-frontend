@@ -12,7 +12,7 @@
         >
           <b-form-group
               class="form__item"
-              label="Name task"
+              label="Name"
               label-for="Name task"
               label-class="form__label"
           >
@@ -27,7 +27,7 @@
             <b-form-invalid-feedback
                 id="input"
                 v-if="!this.$v.task.name.required"
-            >This field will be required.</b-form-invalid-feedback>
+            >This field is required.</b-form-invalid-feedback>
           </b-form-group>
 
           <b-form-group
@@ -47,14 +47,14 @@
             <b-form-invalid-feedback
                 id="textarea"
                 v-if="!this.$v.task.content.required"
-            >This field will be required.</b-form-invalid-feedback>
+            >This field is required.</b-form-invalid-feedback>
           </b-form-group>
 
           <div
               class="auth__invalid"
               v-if="!isAssignee"
           >
-            <p>Please, pick Assignee</p>
+            <p>Please, pick assignee</p>
           </div>
 
           <div class="create-task__footer">
