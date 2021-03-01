@@ -27,6 +27,13 @@
   @media (max-width: 768px) {
     margin-bottom: 5rem;
   }
+
+  &--task {
+    position: unset;
+    box-shadow: unset;
+
+    width: 100%;
+  }
 }
 
 .attributes__item {

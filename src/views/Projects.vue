@@ -42,7 +42,11 @@
       <div v-else>Loading...</div>
 
       <div class="project__footer">
-        <button class="button mt-5">Add task</button>
+        <router-link
+            class="button mt-5"
+            tag="button"
+            :to="`${project.id}/createTask`"
+        >Add task</router-link>
       </div>
     </div>
 

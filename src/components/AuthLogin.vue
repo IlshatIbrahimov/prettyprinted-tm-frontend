@@ -23,7 +23,7 @@
       <b-form-invalid-feedback
           id="input-email"
           v-else-if="!this.$v.user['email'].email"
-      >This field will be email!
+      >Invalid email.
       </b-form-invalid-feedback>
     </b-form-group>
 

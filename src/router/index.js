@@ -31,6 +31,30 @@ const routes = [
     },
     component: () => import('@/views/Projects.vue')
   },
+  {
+    path: '/project/:id/createTask',
+    name: 'CreateTask',
+    meta: {
+      requiresAuth: true,
+      layout: 'main',
+      title: 'Task Manager'
+    },
+    component: () => import('../views/CreateTask.vue'),
+    beforeEnter: (to, from, next) => {
+      if(from.name !== 'Projects') next({ name: 'Dashboard' })
+      else next()
+    }
+  },
+  {
+    path: '/project/:projectId/task-:id',
+    name: 'Task',
+    meta: {
+      requiresAuth: true,
+      layout: 'main',
+      title: 'Task Manager'
+    },
+    component: () => import('../views/Task.vue')
+  }
 ]
 
 const router = new VueRouter({
