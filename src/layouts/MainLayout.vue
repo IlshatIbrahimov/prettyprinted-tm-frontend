@@ -50,11 +50,11 @@
       <div class="sidebar__footer">
         <div class="sidebar__footer-avatar">
           <span class="avatar">
-            <small>{{ getName.slice(0, 1).toUpperCase() }}</small>
-            <small>{{ getSurname.slice(0, 1).toUpperCase() }}</small>
+            <small>{{ getAuthUser.name.slice(0, 1).toUpperCase() }}</small>
+            <small>{{ getAuthUser.surname.slice(0, 1).toUpperCase() }}</small>
           </span>
         </div>
-        <div class="sidebar__footer-title">{{ getName }} {{ getSurname }}</div>
+        <div class="sidebar__footer-title">{{ getAuthUser.name }} {{ getAuthUser.surname }}</div>
         <div class="sidebar__footer-menu">
           <router-link
               class="sidebar__footer-menu--home"
@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <div>
+    <div class="modal__create-project">
       <b-modal
           ref="modal-create-project"
           id="modal-create-project"
@@ -142,6 +142,10 @@ export default {
     return {
       projects: [],
       project: {name: ''},
+      user: {
+        name: '',
+        surname: ''
+      },
       users: [],
       name: '',
       surname: ''
@@ -159,8 +163,8 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem('jwt')
-      localStorage.removeItem('name')
-      localStorage.removeItem('surname')
+      localStorage.removeItem('user')
+
       this.$router.push('/auth')
     },
     validateState(name) {
@@ -211,11 +215,14 @@ export default {
     })
   },
   computed: {
-    getName() {
+    getName () {
       return this.name = localStorage.getItem('name')
     },
     getSurname() {
       return this.surname = localStorage.getItem('surname')
+    },
+    getAuthUser() {
+      return this.user = JSON.parse(localStorage.getItem('user'))
     }
   }
 }
