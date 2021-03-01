@@ -38,7 +38,7 @@
     <div class="attributes" v-if="filterShow">
       <div
           class="attributes__item"
-          v-for="(item, name, index) in attributes"
+          v-for="(item, name, index) in this.$root.attributes"
           :key="index"
       >
         <label
@@ -76,8 +76,6 @@
 </template>
 
 <script>
-import Attributes from '../utils/attributes'
-
 export default {
   name: 'Search',
   data() {
@@ -91,7 +89,6 @@ export default {
         priority: 'default',
         status: 'default',
       },
-      attributes: {},
       filterShow: false
     }
   },
@@ -115,8 +112,5 @@ export default {
       this.$emit('reset')
     },
   },
-  mounted() {
-    this.attributes = Attributes
-  }
 }
 </script>
