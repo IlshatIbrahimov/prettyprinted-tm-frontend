@@ -17,26 +17,28 @@
             :to="`/project/${ task.projectId }/task-${ task.id }`"
         >{{ task.name }}</router-link>
       </div>
+
       <div class="tasks__list-state">
-        <div>
+        <div v-if="$root.attributes.priority[task.priority] !== undefined">
           <span :style="{ backgroundColor: $root.attributes.priority[task.priority].style }">{{$root.attributes.priority[task.priority].name}}</span>
         </div>
-        <div>
+        <div v-if="$root.attributes.priority[task.type] !== undefined">
           <span :style="{ backgroundColor: $root.attributes.type[task.type].style }">{{$root.attributes.type[task.type].name}}</span>
         </div>
-        <div>
+        <div v-if="$root.attributes.priority[task.status] !== undefined">
           <span :style="{ backgroundColor: $root.attributes.status[task.status].style }">{{$root.attributes.status[task.status].name}}</span>
         </div>
         <div>
           <span>{{ task.assignee.name }} {{ task.assignee.surname }}</span>
         </div>
       </div>
-      <div v-else>Loading...</div>
     </li>
   </ul>
 </template>
 
 <script>
+import Store from '../middlewares/store'
+
 export default {
   name: 'Tasks',
   props: {
