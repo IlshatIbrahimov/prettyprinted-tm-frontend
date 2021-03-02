@@ -11,7 +11,7 @@ const routes = [
       guest: true,
       layout: 'empty'
     },
-    component: () => import('@/views/Auth.vue')
+    component: () => import('../views/Auth.vue')
   },
   {
     path: '/',
@@ -20,7 +20,7 @@ const routes = [
       requiresAuth: true,
       layout: 'main'
     },
-    component: () => import('@/views/Dashboard.vue')
+    component: () => import('../views/Dashboard.vue')
   },
   {
     path: '/project/:id',
@@ -29,7 +29,7 @@ const routes = [
       requiresAuth: true,
       layout: 'main'
     },
-    component: () => import('@/views/Projects.vue')
+    component: () => import('../views/Projects.vue')
   },
   {
     path: '/project/:id/createTask',

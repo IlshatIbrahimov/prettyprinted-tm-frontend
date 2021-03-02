@@ -30,17 +30,15 @@
 </template>
 
 <script>
-import TaskService from '../services/TaskService'
 import Search from '../components/Search'
-import Tasks from '../components/Tasks';
-
+import Tasks from '../components/Tasks'
+import TaskService from '../services/TaskService'
 import FilterTasks from '../middlewares/filter'
 
 export default {
   data() {
     return {
       tasks: [],
-
       flag: false,
       foundTasks: [],
       filterOptions: {}
@@ -82,5 +80,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss"></style>

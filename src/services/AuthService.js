@@ -1,4 +1,4 @@
-import http from '@/http-auth'
+import http from '../http-auth'
 
 class AuthService {
   login(user) {

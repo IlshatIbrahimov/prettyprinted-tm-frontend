@@ -10,33 +10,22 @@
             class="tasks__list-title-id"
             tag="a"
             :to="`/project/${ task.projectId }/task-${ task.id }`"
-        >task-{{ task.id }}
-        </router-link>
+        >task-{{ task.id }}</router-link>
         <router-link
             class="tasks__list-title-name"
             tag="a"
             :to="`/project/${ task.projectId }/task-${ task.id }`"
-        >{{ task.name }}
-        </router-link>
+        >{{ task.name }}</router-link>
       </div>
-      <div
-          v-if="Object.keys(attribute).length"
-          class="tasks__list-state"
-      >
+      <div class="tasks__list-state">
         <div>
-              <span :style="{ backgroundColor: attribute.priority[task.priority].style }">{{
-                  attribute.priority[task.priority].name
-                }}</span>
+          <span :style="{ backgroundColor: $root.attributes.priority[task.priority].style }">{{$root.attributes.priority[task.priority].name}}</span>
         </div>
         <div>
-              <span :style="{ backgroundColor: attribute.type[task.type].style }">{{
-                  attribute.type[task.type].name
-                }}</span>
+          <span :style="{ backgroundColor: $root.attributes.type[task.type].style }">{{$root.attributes.type[task.type].name}}</span>
         </div>
         <div>
-              <span :style="{ backgroundColor: attribute.status[task.status].style }">{{
-                  attribute.status[task.status].name
-                }}</span>
+          <span :style="{ backgroundColor: $root.attributes.status[task.status].style }">{{$root.attributes.status[task.status].name}}</span>
         </div>
         <div>
           <span>{{ task.assignee.name }} {{ task.assignee.surname }}</span>
@@ -48,15 +37,8 @@
 </template>
 
 <script>
-import Attributes from '@/utils/attributes.js'
-
 export default {
   name: 'Tasks',
-  data() {
-    return {
-      attribute: {}
-    }
-  },
   props: {
     tasks: {
       type: Array,
@@ -65,8 +47,5 @@ export default {
       }
     }
   },
-  mounted() {
-    this.attribute = Attributes
-  }
 }
 </script>

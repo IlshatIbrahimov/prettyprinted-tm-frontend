@@ -46,6 +46,7 @@
           </ul>
         </div>
       </div>
+      <!-- /.sidebar__content -->
 
       <div class="sidebar__footer">
         <div class="sidebar__footer-avatar">
@@ -67,9 +68,10 @@
           ></button>
         </div>
       </div>
-    </div>
+      <!-- /.sidebar__footer -->
+    </div><!-- /.sidebar -->
 
-    <div class="modal__create-project">
+    <div class="modal-create-project">
       <b-modal
           ref="modal-create-project"
           id="modal-create-project"
@@ -115,18 +117,19 @@
 
             <b-button
                 type="submit"
-                class="auth__btn modal__btn mt-3"
+                class="auth__btn modal-create-project-btn mt-3"
             >Create
             </b-button>
           </b-form-group>
         </b-form>
       </b-modal>
-    </div>
+    </div><!-- /.modal-create-project -->
 
     <div class="main scroll">
       <router-view/>
-    </div>
-  </div>
+    </div><!-- main -->
+
+  </div><!-- /.page -->
 </template>
 
 <script>
@@ -140,15 +143,15 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
+      project: {
+        name: ''
+      },
       projects: [],
-      project: {name: ''},
       user: {
         name: '',
         surname: ''
       },
       users: [],
-      name: '',
-      surname: ''
     }
   },
   validations: {
@@ -176,7 +179,7 @@ export default {
           .then(response => response)
           .catch(error => console.log(error.response))
 
-      this.projects = res.data
+      this.projects = [...res.data]
     },
     async fetchUsers() {
       const res = await UserService.getAll()
@@ -186,11 +189,9 @@ export default {
       this.users = [...res.data]
     },
     async addProject(project) {
-      const res = await ProjectService.addProject(project)
+      return await ProjectService.addProject(project)
           .then(response => response)
           .catch(error => console.log(error.response))
-
-      console.log(res)
     },
     onSubmit() {
       this.$v.project.$touch()
@@ -215,12 +216,6 @@ export default {
     })
   },
   computed: {
-    getName () {
-      return this.name = localStorage.getItem('name')
-    },
-    getSurname() {
-      return this.surname = localStorage.getItem('surname')
-    },
     getAuthUser() {
       return this.user = JSON.parse(localStorage.getItem('user'))
     }
@@ -229,7 +224,7 @@ export default {
 </script>
 
 <style lang="scss">
-.modal__btn {
+.modal-create-project-btn {
   font-size: 1.6rem !important;
 }
 </style>
