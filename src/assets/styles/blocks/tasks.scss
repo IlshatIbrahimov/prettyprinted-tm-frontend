@@ -1,0 +1,172 @@
+.tasks {
+  padding: 3rem 5rem 1rem 5rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+.tasks__list-item {
+  & + & {
+    margin-top: 2rem;
+  }
+}
+
+.tasks__list-title {
+  display: flex;
+
+  font-size: 1.8rem;
+  font-weight: 300;
+
+  &-id,
+  &-name {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  &-id {
+    min-width: 7.5%;
+    white-space: pre;
+
+    display: inline-block;
+    padding-right: 2rem;
+
+    color: #7A7A7A;
+    text-transform: uppercase;
+
+    &:hover {
+      color: #7A7A7A;
+    }
+  }
+
+  &-name {
+    width: calc(100% - 7.5%);
+    color: #000;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      color: #000;
+    }
+  }
+
+  @media (max-width: 992px) {
+    font-size: 1.6rem;
+  }
+}
+
+.tasks__list-state {
+  margin-top: -.7rem;
+
+  display: flex;
+  align-items: center;
+
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 500;
+
+  div:last-child {
+    width: 30%;
+  }
+
+  div {
+    width: 11%;
+
+    span {
+      padding: .2rem .7rem;
+
+      font-size: 1rem;
+      line-height: 1rem;
+      font-weight: 300;
+      color: #000;
+
+      border-radius: .2rem;
+
+      @media (max-width: 992px) {
+        font-size: .9rem;
+      }
+    }
+
+    &:last-child {
+      //max-width: 400px;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      span {
+        background-color: rgba(#ACF1F1, .5);
+      }
+    }
+  }
+
+  @media (max-width: 1200px) {
+    div:not(:first-child) {
+      margin-left: 5rem;
+    }
+  }
+
+  @media (max-width: 992px) {
+    div:not(:first-child) {
+      margin-left: 4rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    div:not(:first-child) {
+      margin-left: 3rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    div:not(:first-child) {
+      margin-left: 1rem;
+    }
+
+    div:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.tasks__footer {
+  padding-top: 2rem;
+  width: 10%;
+}
+
+.tasks__not-found {
+  margin: 0 auto;
+  width: 700px;
+
+  p {
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 2.5rem;
+    text-align: center;
+  }
+}
+
+.tasks__cat {
+  margin: 1.5rem auto 0;
+
+  width: 200px;
+  height: 200px;
+
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 50%;
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

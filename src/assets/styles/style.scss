@@ -1,0 +1,150 @@
+html {
+  font-size: 10px;
+}
+
+a {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+
+  &:hover {
+    text-decoration: none;
+    color: unset;
+  }
+}
+
+button {
+  padding: 0;
+
+  border: none!important;
+  background: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+p, ul, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+body {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #000;
+}
+
+.page {
+  display: flex;
+}
+
+.main {
+  width: 75%;
+  height: 100vh;
+
+  overflow: auto;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.scroll {
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: .4rem;
+    background-color: #F7F8FC;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color:  #ACE0F1;
+    border-radius: .7rem;
+  }
+}
+
+.avatar {
+  position: relative;
+
+  padding: 0rem .5rem;
+  display: block;
+
+  min-width: 35px;
+  width: 35px;
+  height: 35px;
+
+  font-family: 'Roboto', sans-serif;
+  text-align: left;
+
+  border-radius: .6rem;
+  background: #2c3e50;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #3498db, #2c3e50);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #3498db, #2c3e50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  &:before {
+    content: '';
+
+    position: absolute;
+    left: .5rem;
+    top: 2.3rem;
+
+    background-color: #fff;
+    width: 8px;
+    height: 1px;
+  }
+
+  small {
+    color: #fff;
+    font-size: 1.2rem;
+
+    &:last-child {
+      margin-left: .2rem;
+    }
+  }
+}
+
+.button {
+  padding: 0.3rem .8rem;
+
+  font-family: 'Comfortaa', sans-serif;
+
+  background-color: #f1e2ac;
+  border-radius: 5px;
+  text-align: center;
+
+  transition: background-color .2s linear;
+
+  &:hover {
+    background-color: rgba(241,226,172,.5);
+  }
+}
+
+.form-control {
+  height: calc(1.5em + 1.2rem + 2px);
+  padding: .6rem 1.2rem;
+  font-size: 1.6rem;
+  border-radius: .4rem;
+}
+
+@import './src/assets/styles/blocks/auth';
+@import './src/assets/styles/blocks/sidebar';
+@import './src/assets/styles/blocks/header';
+@import './src/assets/styles/blocks/tasks';
+@import './src/assets/styles/blocks/tabs';
+@import './src/assets/styles/blocks/dashboard';
+@import './src/assets/styles/blocks/project';
+@import './src/assets/styles/blocks/nav';
+@import './src/assets/styles/blocks/search';
+@import './src/assets/styles/blocks/attributes';
+@import './src/assets/styles/blocks/task';
+@import './src/assets/styles/blocks/form';
+@import './src/assets/styles/blocks/createTask';
+@import './src/assets/styles/blocks/comments';
+
+@import './src/assets/styles/helpers';
+
