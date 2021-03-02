@@ -35,7 +35,10 @@
       <button class="search__options-btn search__options-btn--search"></button>
     </div>
 
-    <div class="attributes" v-if="filterShow">
+    <div
+        v-if="filterShow"
+        class="attributes"
+    >
       <div
           class="attributes__item"
           v-for="(item, name, index) in this.$root.attributes"
@@ -62,7 +65,10 @@
         </select>
       </div>
 
-      <div class="attributes__item" v-if="true">
+      <div
+          v-if="true"
+          class="attributes__item"
+      >
         <!--    TODO    -->
       </div>
 

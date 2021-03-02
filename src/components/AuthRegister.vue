@@ -167,7 +167,6 @@
 <script>
 import {validationMixin} from 'vuelidate'
 import {email, maxLength, minLength, required} from 'vuelidate/lib/validators'
-
 const equalPassword = (value, vm) => value === vm.password
 
 export default {

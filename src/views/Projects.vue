@@ -57,7 +57,6 @@
 import ProjectService from '../services/ProjectService'
 import Search from '../components/Search'
 import Tasks from '../components/Tasks'
-
 import FilterTasks from '../middlewares/filter'
 
 export default {
@@ -116,5 +115,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss"></style>

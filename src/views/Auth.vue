@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import Login from '@/components/AuthLogin.vue'
-import Register from '@/components/AuthRegister.vue'
-import AuthService from '@/services/AuthService'
+import Login from '../components/AuthLogin.vue'
+import Register from '../components/AuthRegister.vue'
+import AuthService from '../services/AuthService'
 
 export default {
   name: 'Auth',
@@ -53,9 +53,6 @@ export default {
               name: response.data.user.name,
               surname: response.data.user.surname
             }))
-
-            // this.$root.name = response.data.user.name
-            // this.$root.surname = response.data.user.surname
 
             if (response.status === 200) {
               this.error = false

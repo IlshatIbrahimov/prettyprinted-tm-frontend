@@ -71,7 +71,7 @@
         <div class="attributes attributes--task">
           <div
               class="attributes__item"
-              v-for="(item, name, index) in attributes"
+              v-for="(item, name, index) in $root.attributes"
               :key="index"
           >
             <label
@@ -118,8 +118,6 @@
 import UserService from '../services/UserService'
 import ProjectService from '../services/ProjectService'
 import TaskService from '../services/TaskService'
-import Attributes from '../utils/attributes'
-
 import {validationMixin} from 'vuelidate'
 import {required} from 'vuelidate/lib/validators'
 
@@ -134,8 +132,6 @@ export default {
         taskList: []
       },
       users: [],
-      attributes: {},
-
       task: {
         name: '',
         content: '',
@@ -146,7 +142,6 @@ export default {
           status: 0
         }
       },
-
       isAssignee: true
     }
   },
@@ -211,7 +206,6 @@ export default {
   mounted() {
     this.fetchUsers()
     this.fetchProjectById()
-    this.attributes = Attributes
   },
 }
 </script>

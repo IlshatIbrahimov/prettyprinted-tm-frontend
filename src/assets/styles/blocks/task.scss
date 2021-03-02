@@ -89,7 +89,9 @@
 .task__header-btn {
   padding: 0;
 
-  display: inline-block;
+  display: flex;
+  align-items: center;
+
   border: none;
 
   font-size: 1.4rem;
