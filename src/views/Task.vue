@@ -5,7 +5,7 @@
     </header>
 
     <div class="task">
-      <div class="task__left">
+      <div class="task__left scroll">
         <div class="task__header">
           <div class="task__header-item">
             <button
