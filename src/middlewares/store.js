@@ -3,6 +3,7 @@ export default {
   surname: '',
   // url: 'http://localhost:8080',
   url: 'https://prettyprinted-tm-backend.herokuapp.com',
+  // url: 'https://pp-taskmanager-backend.herokuapp.com',
   attributes: {
     priority: {
       0: { name: 'Minor', style: '#ACCCF1' },
