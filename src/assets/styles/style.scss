@@ -57,6 +57,9 @@ body {
 .scroll {
   overflow-x: hidden;
 
+  scrollbar-color: #ACE0F1 #F7F8FC;
+  scrollbar-width: thin;
+
   &::-webkit-scrollbar {
     width: .4rem;
     background-color: #F7F8FC;
