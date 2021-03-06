@@ -262,9 +262,11 @@ export default {
         taskList: []
       },
       users: [],
+
       foundTasks: [],
       flag: false,
       filterOptions: {},
+
       active: 'tasks'
     }
   },
@@ -299,15 +301,12 @@ export default {
       this.foundTasks = [...this.project.taskList]
 
       if (filterOptions.valueAttr === 'default') {
-        console.log('it is IF filterOptions')
         delete this.filterOptions[filterOptions.name]
       } else {
-        console.log('it is ELSE filterOptions')
         this.filterOptions[filterOptions.name] = filterOptions.valueAttr
       }
 
       this.foundTasks = FilterTasks(this.foundTasks, this.filterOptions)
-
       this.flag = !!Object.keys(this.filterOptions).length
     },
     reset() {
