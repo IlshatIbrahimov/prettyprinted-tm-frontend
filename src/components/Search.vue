@@ -34,10 +34,13 @@
       </button>
     </div>
 
+
+    <!-- Filters -->
     <div
         v-if="filterShow"
         class="attributes"
     >
+      <!-- States select -->
       <div
           class="attributes__item"
           v-for="(item, name, index) in this.$root.attributes"
@@ -54,7 +57,7 @@
             @change="filter(name, keys[name])"
             ref="select"
         >
-          <option value="default" selected disabled>Any</option>
+          <option value="default" selected>Any</option>
           <option
               class="select__option"
               v-for="(attr, idx) in item"
@@ -64,17 +67,37 @@
         </select>
       </div>
 
+
+      <!-- Assignee select -->
       <div
-          v-if="true"
+          v-if="users.length"
           class="attributes__item"
       >
-        <!--    TODO    -->
+        <label
+            class="attributes__label"
+            for="assignee"
+        >Assignee:</label>
+        <select
+            id="assignee"
+            class="select"
+            v-model="keys['assignee']"
+            @change="filter('assignee', keys['assignee'])"
+            ref="select"
+        >
+          <option value="default" selected>Any</option>
+          <option
+              class="select__option"
+              v-for="user in users"
+              :key="user.id"
+              :value="user.id"
+          >{{ user.name }} {{user.surname}}</option>
+        </select>
       </div>
 
       <button
-          class="button"
+          class="button mt-5"
           @click.prevent="reset"
-      >Reset</button>
+      >Reset all</button>
     </div>
 
   </div>
@@ -93,8 +116,17 @@ export default {
         type: 'default',
         priority: 'default',
         status: 'default',
+        assignee: 'default'
       },
       filterShow: false
+    }
+  },
+  props: {
+    users: {
+      type: Array,
+      default() {
+        return []
+      }
     }
   },
   methods: {
@@ -106,6 +138,8 @@ export default {
       this.$emit('filter', {name: 'search', valueAttr: this.search})
     },
     filter(name, valueAttr) {
+      console.log(name, valueAttr)
+
       this.$emit('filter', {name, valueAttr})
     },
     reset() {
