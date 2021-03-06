@@ -254,10 +254,10 @@ export default {
         id: this.task.id,
         name: this.taskName,
         content: this.taskContent,
-        assigneeId: Number(this.assigneeId),
-        priority: Number(this.keys.priority),
-        status: Number(this.keys.status),
-        type: Number(this.keys.type)
+        assigneeId: +this.assigneeId,
+        priorityId: +this.keys.priority,
+        statusId: +this.keys.status,
+        typeId: +this.keys.type
       })
           .then(response => console.log(response))
           .catch(error => console.log(error))
@@ -291,9 +291,9 @@ export default {
     this.attributes = Attributes
     this.fetchTask()
         .then(() => {
-          this.keys.priority = this.task.priority
-          this.keys.type = this.task.type
-          this.keys.status = this.task.status
+          this.keys.priority = this.task.priority.id
+          this.keys.type = this.task.type.id
+          this.keys.status = this.task.status.id
           this.assigneeId = this.task.assignee.id
           this.taskName = this.task.name
           this.taskContent = this.task.content
