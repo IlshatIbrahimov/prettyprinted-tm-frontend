@@ -177,9 +177,9 @@ export default {
         content: this.task.content,
         assigneeId: this.task.assigneeId,
         projectId: this.project.id,
-        priority: this.task.keys.priority,
-        type: this.task.keys.type,
-        status: this.task.keys.status
+        priorityId: this.task.keys.priority,
+        typeId: this.task.keys.type,
+        statusId: this.task.keys.status
       })
           .then(response => {
             console.log(response)

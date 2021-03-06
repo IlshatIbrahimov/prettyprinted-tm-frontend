@@ -281,6 +281,7 @@ export default {
           .catch(error => console.log(error.response))
 
       this.project = {...res.data}
+      console.log(res)
     },
     filter(filterOptions) {
       this.foundTasks = [...this.project.taskList]
