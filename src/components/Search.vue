@@ -109,9 +109,6 @@ export default {
   data() {
     return {
       search: '',
-      assignee: {
-        id: 'default',
-      },
       keys: {
         type: 'default',
         priority: 'default',
@@ -138,14 +135,12 @@ export default {
       this.$emit('filter', {name: 'search', valueAttr: this.search})
     },
     filter(name, valueAttr) {
-      console.log(name, valueAttr)
-
       this.$emit('filter', {name, valueAttr})
     },
     reset() {
       this.search = ''
       for(const value in this.keys) {
-        this.keys[value] = this.assignee.id = 'default'
+        this.keys[value] = 'default'
       }
 
       this.$emit('reset')
