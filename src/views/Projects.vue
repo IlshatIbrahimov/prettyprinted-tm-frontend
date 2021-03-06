@@ -32,6 +32,8 @@
       <Search
           @filter="filter"
           @reset="reset"
+
+          :users="users"
       />
 
       <Tasks
@@ -248,6 +250,7 @@ import ProjectService from '../services/ProjectService'
 import Search from '../components/Search'
 import Tasks from '../components/Tasks'
 import FilterTasks from '../middlewares/filter'
+import UserService from "../services/UserService";
 
 export default {
   name: 'Projects',
@@ -258,6 +261,7 @@ export default {
         name: '',
         taskList: []
       },
+      users: [],
       foundTasks: [],
       flag: false,
       filterOptions: {},
@@ -281,11 +285,26 @@ export default {
           .catch(error => console.log(error.response))
 
       this.project = {...res.data}
-      console.log(res)
+    },
+    async fetchUsers() {
+      const res = await UserService.getAll()
+          .then(response => response)
+          .catch(error => console.log(error.response))
+
+      this.users = [...res.data]
     },
     filter(filterOptions) {
+      console.log(this.project.taskList)
+
       this.foundTasks = [...this.project.taskList]
-      this.filterOptions[filterOptions.name] = filterOptions.valueAttr
+
+      if (filterOptions.valueAttr === 'default') {
+        console.log('it is IF filterOptions')
+        delete this.filterOptions[filterOptions.name]
+      } else {
+        console.log('it is ELSE filterOptions')
+        this.filterOptions[filterOptions.name] = filterOptions.valueAttr
+      }
 
       this.foundTasks = FilterTasks(this.foundTasks, this.filterOptions)
 
@@ -299,6 +318,7 @@ export default {
   },
   mounted() {
     this.getProject()
+    this.fetchUsers()
   },
   beforeRouteUpdate(to, from, next) {
     this.reset()
