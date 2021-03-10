@@ -27,7 +27,8 @@
             <b-form-invalid-feedback
                 id="input"
                 v-if="!this.$v.task.name.required"
-            >This field is required.</b-form-invalid-feedback>
+            >This field is required.
+            </b-form-invalid-feedback>
           </b-form-group>
 
           <b-form-group
@@ -47,7 +48,8 @@
             <b-form-invalid-feedback
                 id="textarea"
                 v-if="!this.$v.task.content.required"
-            >This field is required.</b-form-invalid-feedback>
+            >This field is required.
+            </b-form-invalid-feedback>
           </b-form-group>
 
           <div
@@ -131,7 +133,6 @@ export default {
         name: '',
         taskList: []
       },
-      users: [],
       task: {
         name: '',
         content: '',
@@ -142,6 +143,7 @@ export default {
           status: 0
         }
       },
+      users: [],
       isAssignee: true
     }
   },
