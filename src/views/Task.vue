@@ -30,35 +30,69 @@
         </div>
 
         <div class="task__content">
-          <div class="task__content-title">
-                <span
-                    class="task__header-title"
-                    v-if="!isEdit"
-                >{{ task.name }}</span>
-            <b-form-input
-                v-else
-                type="text"
-                class="form__input-field"
-                v-model="task.name"
-                required
-            ></b-form-input>
-          </div>
+          <div
+              v-if="!isEdit"
+              class="task__content-wrapper horizontal-separate"
+          >
+            <div class="task__content-title">
+              <span class="task__header-title">{{ task.name }}</span>
+            </div>
 
-          <div class="task__text">
-            <p v-if="!isEdit"></p>
-            <div v-else>
-              <b-form-textarea
-                  class="form__textarea-field"
-                  v-model="task.content"
-                  required
-              ></b-form-textarea>
-              <button
-                  class="task__btn button"
-                  @click.prevent="updateTask"
-              >Save
-              </button>
+            <div class="task__text">
+              <p>{{ task.content }}</p>
             </div>
           </div>
+
+          <b-form class="task__content-wrapper horizontal-separate" v-else>
+            <b-form-group>
+              <b-form-input
+                  id="nameTask"
+                  type="text"
+                  v-model="$v.task.name.$model"
+                  class="form__input-field"
+                  :state="validateState('name')"
+              ></b-form-input>
+
+              <b-form-invalid-feedback
+                  id="input"
+                  v-if="!this.$v.task.name.required"
+              >This field is required.
+              </b-form-invalid-feedback>
+
+              <b-form-invalid-feedback
+                  id="input"
+                  v-if="!this.$v.task.name.maxLength"
+              >The name must be at most 140 characters long.
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <b-form-group>
+              <b-form-textarea
+                  id="content"
+                  type="text"
+                  v-model="$v.task.content.$model"
+                  class="form__textarea-field"
+                  :state="validateState('content')"
+              ></b-form-textarea>
+
+              <b-form-invalid-feedback
+                  id="textarea"
+                  v-if="!this.$v.task.content.required"
+              >This field is required.
+              </b-form-invalid-feedback>
+
+              <b-form-invalid-feedback
+                  id="textarea"
+                  v-if="!this.$v.task.content.maxLength"
+              >The content must be at most 1000 characters long.
+              </b-form-invalid-feedback>
+            </b-form-group>
+            <button
+                class="button w-25"
+                @click.prevent="updateTask"
+            >Save
+            </button>
+          </b-form>
 
           <Comment
               class="comments"
@@ -135,9 +169,12 @@ import UserService from '../services/UserService'
 import TaskService from '../services/TaskService'
 import CommentService from '../services/CommentService'
 import Comment from '../components/Comment'
+import {validationMixin} from 'vuelidate'
+import {maxLength, required} from "vuelidate/lib/validators"
 
 export default {
   name: 'Task',
+  mixins: [validationMixin],
   data() {
     return {
       users: [],
@@ -186,7 +223,24 @@ export default {
   components: {
     Comment
   },
+  validations: {
+    task: {
+      name: {
+        required,
+        maxLength: maxLength(140)
+
+      },
+      content: {
+        required,
+        maxLength: maxLength(1000)
+      }
+    }
+  },
   methods: {
+    validateState(name) {
+      const {$dirty, $error} = this.$v.task[name]
+      return $dirty ? !$error : null
+    },
     async fetchUsers() {
       const res = await UserService.getAll()
           .then(response => response)
@@ -202,6 +256,11 @@ export default {
           .catch(error => console.log(error.response))
     },
     async updateTask() {
+      this.$v.task.$touch()
+      if (this.$v.task.$anyError) {
+        return
+      }
+
       await TaskService.updateTask({
         id: this.task.id,
         name: this.task.name,
