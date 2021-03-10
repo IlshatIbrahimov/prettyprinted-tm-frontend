@@ -259,7 +259,7 @@ export default {
       project: {
         id: null,
         name: '',
-        taskList: []
+        tasks: []
       },
       users: [],
 
@@ -286,6 +286,8 @@ export default {
           .then(response => response)
           .catch(error => console.log(error.response))
 
+      console.log(res)
+
       this.project = {...res.data}
     },
     async fetchUsers() {
@@ -296,9 +298,9 @@ export default {
       this.users = [...res.data]
     },
     filter(filterOptions) {
-      console.log(this.project.taskList)
+      console.log(this.project.tasks)
 
-      this.foundTasks = [...this.project.taskList]
+      this.foundTasks = [...this.project.tasks]
 
       if (filterOptions.valueAttr === 'default') {
         delete this.filterOptions[filterOptions.name]
@@ -326,7 +328,7 @@ export default {
   },
   computed: {
     tasks() {
-      return this.foundTasks.length || this.flag ? this.foundTasks : this.project.taskList
+      return this.foundTasks.length || this.flag ? this.foundTasks : this.project.tasks
     }
   }
 }

@@ -175,7 +175,7 @@ export default {
       this.isAssignee = true
 
       await TaskService.addTask({
-        taskName: this.task.name,
+        name: this.task.name,
         content: this.task.content,
         assigneeId: this.task.assigneeId,
         projectId: this.project.id,
@@ -185,7 +185,7 @@ export default {
       })
           .then(response => {
             console.log(response)
-            this.$router.push('/')
+            this.$router.push(`/project/${response.data.project.id}/task-${response.data.id}`)
           })
           .catch(error => console.log(error.response))
 
