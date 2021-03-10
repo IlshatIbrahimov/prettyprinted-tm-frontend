@@ -29,6 +29,12 @@
                 v-if="!this.$v.task.name.required"
             >This field is required.
             </b-form-invalid-feedback>
+
+            <b-form-invalid-feedback
+                id="input"
+                v-if="!this.$v.task.name.maxLength"
+            >The name must be at most 140 characters long.
+            </b-form-invalid-feedback>
           </b-form-group>
 
           <b-form-group
@@ -47,8 +53,8 @@
 
             <b-form-invalid-feedback
                 id="textarea"
-                v-if="!this.$v.task.content.required"
-            >This field is required.
+                v-if="!this.$v.task.content.maxLength"
+            >The content must be at most 1000 characters long.
             </b-form-invalid-feedback>
           </b-form-group>
 
@@ -121,7 +127,7 @@ import UserService from '../services/UserService'
 import ProjectService from '../services/ProjectService'
 import TaskService from '../services/TaskService'
 import {validationMixin} from 'vuelidate'
-import {required} from 'vuelidate/lib/validators'
+import {required, maxLength} from 'vuelidate/lib/validators'
 
 export default {
   name: 'CreateTask',
@@ -150,10 +156,12 @@ export default {
   validations: {
     task: {
       name: {
-        required
+        required,
+        maxLength: maxLength(140)
+
       },
       content: {
-        required
+        maxLength: maxLength(1000)
       }
     }
   },
