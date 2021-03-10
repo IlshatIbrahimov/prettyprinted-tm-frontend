@@ -190,7 +190,10 @@ export default {
     },
     async addProject(project) {
       return await ProjectService.addProject(project)
-          .then(response => response)
+          .then(response => {
+            this.$router.push(`/project/${response.data.id}`)
+            console.log('new project', response)
+          })
           .catch(error => console.log(error.response))
     },
     onSubmit() {
