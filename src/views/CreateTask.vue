@@ -53,12 +53,6 @@
 
             <b-form-invalid-feedback
                 id="textarea"
-                v-if="!this.$v.task.content.required"
-            >This field is required.
-            </b-form-invalid-feedback>
-
-            <b-form-invalid-feedback
-                id="textarea"
                 v-if="!this.$v.task.content.maxLength"
             >The content must be at most 1000 characters long.
             </b-form-invalid-feedback>
@@ -167,7 +161,6 @@ export default {
 
       },
       content: {
-        required,
         maxLength: maxLength(1000)
       }
     }
