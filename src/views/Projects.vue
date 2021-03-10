@@ -49,7 +49,16 @@
           <img src="../assets/img/cat.jpg" alt="sad cat">
         </div>
       </div>
-      <div v-else>Loading...</div>
+      <div v-else>
+        <div class="loader">
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__ball"></div>
+        </div>
+      </div>
 
       <div class="project__footer">
         <router-link
@@ -62,195 +71,24 @@
     </div>
 
     <!-- Messages -->
-    <div
+    <Comment
         class="comments comments--messages"
         :class="{show: isActive('messages')}"
-    >
 
-      <div class="comments__item">
-        <div class="comments__left">
-          <div class="comments__avatar avatar-wrapper">
-              <span class="avatar">
-                <small>М</small>
-                <small>Б</small>
-              </span>
-          </div>
-        </div>
-        <div class="comments__right">
-          <div class="comments__title comments__title--project">
-            <p>Марсель Белялов</p><span>1 марта</span>
-          </div>
-          <div class="comments__action">
-            <p class="comments__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.
-              Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий
-              безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для
-              распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и
-              перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов
-              Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной
-              вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="comments__item">
-        <div class="comments__left">
-          <div class="comments__avatar avatar-wrapper">
-              <span class="avatar">
-                <small>М</small>
-                <small>Б</small>
-              </span>
-          </div>
-        </div>
-        <div class="comments__right">
-          <div class="comments__title comments__title--project">
-            <p>Марсель Белялов</p><span>1 марта</span>
-          </div>
-          <div class="comments__action">
-            <p class="comments__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.
-              Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий
-              безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для
-              распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и
-              перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов
-              Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной
-              вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="comments__item">
-        <div class="comments__left">
-          <div class="comments__avatar avatar-wrapper">
-              <span class="avatar">
-                <small>М</small>
-                <small>Б</small>
-              </span>
-          </div>
-        </div>
-        <div class="comments__right">
-          <div class="comments__title comments__title--project">
-            <p>Марсель Белялов</p><span>1 марта</span>
-          </div>
-          <div class="comments__action">
-            <p class="comments__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.
-              Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий
-              безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для
-              распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и
-              перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов
-              Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной
-              вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="comments__item">
-        <div class="comments__left">
-          <div class="comments__avatar avatar-wrapper">
-              <span class="avatar">
-                <small>М</small>
-                <small>Б</small>
-              </span>
-          </div>
-        </div>
-        <div class="comments__right">
-          <div class="comments__title comments__title--project">
-            <p>Марсель Белялов</p><span>1 марта</span>
-          </div>
-          <div class="comments__action">
-            <p class="comments__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.
-              Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий
-              безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для
-              распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и
-              перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов
-              Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной
-              вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="comments__item">
-        <div class="comments__left">
-          <div class="comments__avatar avatar-wrapper">
-              <span class="avatar">
-                <small>М</small>
-                <small>Б</small>
-              </span>
-          </div>
-        </div>
-        <div class="comments__right">
-          <div class="comments__title comments__title--project">
-            <p>Марсель Белялов</p><span>1 марта</span>
-          </div>
-          <div class="comments__action">
-            <p class="comments__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.
-              Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий
-              безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для
-              распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и
-              перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов
-              Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной
-              вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="comments__item">
-        <div class="comments__left">
-          <div class="comments__avatar avatar-wrapper">
-              <span class="avatar">
-                <small>М</small>
-                <small>Б</small>
-              </span>
-          </div>
-        </div>
-        <div class="comments__right">
-          <div class="comments__title comments__title--project">
-            <p>Марсель Белялов</p><span>1 марта</span>
-          </div>
-          <div class="comments__action">
-            <p class="comments__text">Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне.
-              Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий
-              безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для
-              распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и
-              перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов
-              Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной
-              вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <b-form class="form">
-        <div class="form__item">
-          <b-form-textarea
-              class="form__textarea-field"
-              type="text"
-              placeholder="Write your message"
-          ></b-form-textarea>
-        </div>
-
-        <div class="comments__footer">
-          <button
-              class="button comments__btn"
-              type="submit"
-          >Add message
-          </button>
-        </div>
-      </b-form>
-
-    </div>
-
+        @addComment="addComment"
+        :comments="project.comments"
+    />
   </div>
 </template>
 
 <script>
 import ProjectService from '../services/ProjectService'
+import UserService from '../services/UserService'
+import CommentService from '../services/CommentService'
 import Search from '../components/Search'
 import Tasks from '../components/Tasks'
+import Comment from '../components/Comment'
 import FilterTasks from '../middlewares/filter'
-import UserService from "../services/UserService";
 
 export default {
   name: 'Projects',
@@ -259,20 +97,22 @@ export default {
       project: {
         id: null,
         name: '',
-        tasks: []
+        tasks: [],
+        comments: []
       },
       users: [],
 
+      filterOptions: {},
       foundTasks: [],
       flag: false,
-      filterOptions: {},
 
-      active: 'tasks'
+      active: 'tasks',
     }
   },
   components: {
     Search,
-    Tasks
+    Tasks,
+    Comment
   },
   methods: {
     isActive(tab) {
@@ -281,12 +121,10 @@ export default {
     setActive(tab) {
       this.active = tab
     },
-    async getProject() {
+    async fetchProject() {
       const res = await ProjectService.getById(this.$route.params.id)
           .then(response => response)
           .catch(error => console.log(error.response))
-
-      console.log(res)
 
       this.project = {...res.data}
     },
@@ -297,9 +135,18 @@ export default {
 
       this.users = [...res.data]
     },
+    async addComment(content) {
+      await CommentService.addMessage({
+        content: content,
+        id: this.project.id
+      })
+          .then(response => {
+            this.fetchProject()
+            return response
+          })
+          .catch(error => error)
+    },
     filter(filterOptions) {
-      console.log(this.project.tasks)
-
       this.foundTasks = [...this.project.tasks]
 
       if (filterOptions.valueAttr === 'default') {
@@ -315,16 +162,16 @@ export default {
       this.filterOptions = {}
       this.foundTasks = []
       this.flag = false
-    }
+    },
   },
   mounted() {
-    this.getProject()
+    this.fetchProject()
     this.fetchUsers()
   },
   beforeRouteUpdate(to, from, next) {
     this.reset()
     next()
-    this.getProject()
+    this.fetchProject()
   },
   computed: {
     tasks() {
