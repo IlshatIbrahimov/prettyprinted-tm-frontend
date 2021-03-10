@@ -237,6 +237,8 @@ export default {
     this.$root.$on('bv::modal::hide', () => {
       this.$nextTick(() => {
         this.$v.$reset()
+        this.errorNameProject = false
+        this.project.name = ''
       })
     })
   },
