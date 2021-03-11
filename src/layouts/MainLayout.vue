@@ -127,7 +127,7 @@
             class="auth__invalid"
             v-if="errorNameProject"
         >
-          <p>This name already used!</p>
+          <p>This name is already used!</p>
         </div>
 
       </b-modal>
