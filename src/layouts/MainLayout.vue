@@ -127,7 +127,7 @@
             class="auth__invalid"
             v-if="errorNameProject"
         >
-          <p>This name already used!</p>
+          <p>This name is already used!</p>
         </div>
 
       </b-modal>
@@ -237,6 +237,8 @@ export default {
     this.$root.$on('bv::modal::hide', () => {
       this.$nextTick(() => {
         this.$v.$reset()
+        this.errorNameProject = false
+        this.project.name = ''
       })
     })
   },
