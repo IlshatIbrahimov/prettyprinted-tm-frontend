@@ -9,14 +9,14 @@
         <div class="comments__left">
           <div class="comments__avatar avatar-wrapper">
               <span class="avatar">
-                <small>{{ comment.author.name.slice(0, 1) }}</small>
-                <small>{{ comment.author.surname.slice(0, 1) }}</small>
+                <small>{{ comment.author.name.slice(0, 1).toUpperCase() }}</small>
+                <small>{{ comment.author.surname.slice(0, 1).toUpperCase() }}</small>
               </span>
           </div>
         </div>
         <div class="comments__right">
           <div class="comments__title">
-            <p>{{ comment.author.name }} {{ comment.author.surname }}</p><span>{{ comment.date }}</span>
+            <p>{{ comment.author.name }} {{ comment.author.surname }}</p><span>{{ date(comment.date) }}</span>
           </div>
           <div class="comments__action">
 
@@ -98,6 +98,21 @@ export default {
 
       this.$emit('addComment', this.content)
       this.content = ''
+    },
+    date(date) {
+      let res = ''
+      const currentYear = new Date().getFullYear();
+      const commentDate = new Date(date);
+
+      if (currentYear !== commentDate.getFullYear()) {
+        res += commentDate.getFullYear() + ' '
+      }
+
+      return (
+          res + commentDate.toLocaleString('en', {month: 'short'}) + ' ' +
+          commentDate.getDate() + ' ' + commentDate.toLocaleString('ru', {hour: '2-digit', minute: '2-digit'})
+      )
+
     },
     urlify(text) {
       let urlRegex = /^(?:([a-z]+):(?:([a-z]*):)?\/\/)?(?:([^:@]*)(?::([^:@]*))?@)?((?:[a-z0-9_-]+\.)+[a-z]{2,}|localhost|(?:(?:[01]?\d\d?|2[0-4]\d|25[0-5])\.){3}(?:(?:[01]?\d\d?|2[0-4]\d|25[0-5])))(?::(\d+))?(?:([^:\?\#]+))?(?:\?([^\#]+))?(?:\#([^\s]+))?$/i;
