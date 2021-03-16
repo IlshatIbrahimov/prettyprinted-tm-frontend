@@ -3,7 +3,7 @@
     <div v-if="comments.length">
       <div
           class="comments__item"
-          v-for="comment in comments"
+          v-for="(comment, index) in comments"
           :key="comment.id"
       >
         <div class="comments__left">
@@ -75,11 +75,14 @@
 </template>
 
 <script>
+import hyphen from '../middlewares/hyphen';
+
 export default {
   name: 'Comment',
   data() {
     return {
-      content: ''
+      content: '',
+      msg: ''
     }
   },
   props: {
@@ -114,6 +117,10 @@ export default {
       )
 
     },
+    async hyphenpoly(text, index) {
+      const res = await hyphen(text);
+      this.$emit('hyphenpoly', {text: res, index})
+    },
     urlify(text) {
       let urlRegex = /^(?:([a-z]+):(?:([a-z]*):)?\/\/)?(?:([^:@]*)(?::([^:@]*))?@)?((?:[a-z0-9_-]+\.)+[a-z]{2,}|localhost|(?:(?:[01]?\d\d?|2[0-4]\d|25[0-5])\.){3}(?:(?:[01]?\d\d?|2[0-4]\d|25[0-5])))(?::(\d+))?(?:([^:\?\#]+))?(?:\?([^\#]+))?(?:\#([^\s]+))?$/i;
       return text.replace(urlRegex, function (url) {
@@ -125,6 +132,6 @@ export default {
         return '<a style="color: #2193b0;" target="_blank" href="' + url + '">' + url + '</a>';
       })
     },
-  }
+  },
 }
 </script>
