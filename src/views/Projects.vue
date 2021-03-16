@@ -10,20 +10,30 @@
         <ul class="nav__list">
           <li
               class="nav__list-item"
-              :class="{active: true}"
-          >Tasks</li>
+              :class="{active: isActive('tasks')}"
+              @click="setActive('tasks')"
+          >Tasks
+          </li>
           <li
               class="nav__list-item"
-              :class="{active: false}"
-          >Messages</li>
+              :class="{active: isActive('messages')}"
+              @click="setActive('messages')"
+          >Messages
+          </li>
         </ul>
       </nav>
     </header>
 
-    <div class="project__content tasks">
+    <!-- Tasks -->
+    <div
+        class="project__content tasks"
+        :class="{show: isActive('tasks')}"
+    >
       <Search
           @filter="filter"
           @reset="reset"
+
+          :users="users"
       />
 
       <Tasks
@@ -39,24 +49,45 @@
           <img src="../assets/img/cat.jpg" alt="sad cat">
         </div>
       </div>
-      <div v-else>Loading...</div>
+      <div v-else>
+        <div class="loader">
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__ball"></div>
+        </div>
+      </div>
 
       <div class="project__footer">
         <router-link
             class="button mt-5"
             tag="button"
             :to="`${project.id}/createTask`"
-        >Add task</router-link>
+        >Add task
+        </router-link>
       </div>
     </div>
 
+    <!-- Messages -->
+    <Comment
+        class="comments comments--messages"
+        :class="{show: isActive('messages')}"
+
+        @addComment="addComment"
+        :comments="project.comments"
+    />
   </div>
 </template>
 
 <script>
 import ProjectService from '../services/ProjectService'
+import UserService from '../services/UserService'
+import CommentService from '../services/CommentService'
 import Search from '../components/Search'
 import Tasks from '../components/Tasks'
+import Comment from '../components/Comment'
 import FilterTasks from '../middlewares/filter'
 
 export default {
@@ -66,52 +97,92 @@ export default {
       project: {
         id: null,
         name: '',
-        taskList: []
+        tasks: [],
+        comments: []
       },
+      users: [],
+
+      filterOptions: {},
       foundTasks: [],
       flag: false,
 
-      filterOptions: {}
+      active: 'tasks',
     }
   },
   components: {
     Search,
-    Tasks
+    Tasks,
+    Comment
   },
   methods: {
-    async getProject() {
+    isActive(tab) {
+      return this.active === tab
+    },
+    setActive(tab) {
+      this.active = tab
+    },
+    async fetchProject() {
       const res = await ProjectService.getById(this.$route.params.id)
           .then(response => response)
           .catch(error => console.log(error.response))
 
-      this.project = { ...res.data }
+      this.project = {...res.data}
+    },
+    async fetchUsers() {
+      const res = await UserService.getAll()
+          .then(response => response)
+          .catch(error => console.log(error.response))
+
+      this.users = [...res.data]
+    },
+    async addComment(content) {
+      await CommentService.addMessage({
+        content: content,
+        id: this.project.id
+      })
+          .then(response => {
+            this.fetchProject()
+            return response
+          })
+          .catch(error => error)
     },
     filter(filterOptions) {
-      this.foundTasks = [ ...this.project.taskList ]
-      this.filterOptions[filterOptions.name] = filterOptions.valueAttr
+      this.foundTasks = [...this.project.tasks]
+
+      if (filterOptions.valueAttr === 'default') {
+        delete this.filterOptions[filterOptions.name]
+      } else {
+        this.filterOptions[filterOptions.name] = filterOptions.valueAttr
+      }
 
       this.foundTasks = FilterTasks(this.foundTasks, this.filterOptions)
-
       this.flag = !!Object.keys(this.filterOptions).length
     },
     reset() {
       this.filterOptions = {}
       this.foundTasks = []
       this.flag = false
-    }
+    },
   },
   mounted() {
-    this.getProject()
+    this.fetchProject()
+    this.fetchUsers()
   },
   beforeRouteUpdate(to, from, next) {
     this.reset()
     next()
-    this.getProject()
+    this.fetchProject()
   },
   computed: {
     tasks() {
-      return this.foundTasks.length || this.flag ? this.foundTasks : this.project.taskList
+      return this.foundTasks.length || this.flag ? this.foundTasks : this.project.tasks
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.show {
+  display: block;
+}
+</style>

@@ -27,7 +27,14 @@
             <b-form-invalid-feedback
                 id="input"
                 v-if="!this.$v.task.name.required"
-            >This field is required.</b-form-invalid-feedback>
+            >This field is required.
+            </b-form-invalid-feedback>
+
+            <b-form-invalid-feedback
+                id="input"
+                v-if="!this.$v.task.name.maxLength"
+            >The name must be at most 140 characters long.
+            </b-form-invalid-feedback>
           </b-form-group>
 
           <b-form-group
@@ -46,8 +53,9 @@
 
             <b-form-invalid-feedback
                 id="textarea"
-                v-if="!this.$v.task.content.required"
-            >This field is required.</b-form-invalid-feedback>
+                v-if="!this.$v.task.content.maxLength"
+            >The content must be at most 1000 characters long.
+            </b-form-invalid-feedback>
           </b-form-group>
 
           <div
@@ -119,7 +127,7 @@ import UserService from '../services/UserService'
 import ProjectService from '../services/ProjectService'
 import TaskService from '../services/TaskService'
 import {validationMixin} from 'vuelidate'
-import {required} from 'vuelidate/lib/validators'
+import {required, maxLength} from 'vuelidate/lib/validators'
 
 export default {
   name: 'CreateTask',
@@ -131,7 +139,6 @@ export default {
         name: '',
         taskList: []
       },
-      users: [],
       task: {
         name: '',
         content: '',
@@ -142,16 +149,19 @@ export default {
           status: 0
         }
       },
+      users: [],
       isAssignee: true
     }
   },
   validations: {
     task: {
       name: {
-        required
+        required,
+        maxLength: maxLength(140)
+
       },
       content: {
-        required
+        maxLength: maxLength(1000)
       }
     }
   },
@@ -173,17 +183,17 @@ export default {
       this.isAssignee = true
 
       await TaskService.addTask({
-        taskName: this.task.name,
+        name: this.task.name,
         content: this.task.content,
         assigneeId: this.task.assigneeId,
         projectId: this.project.id,
-        priority: this.task.keys.priority,
-        type: this.task.keys.type,
-        status: this.task.keys.status
+        priorityId: this.task.keys.priority,
+        typeId: this.task.keys.type,
+        statusId: this.task.keys.status
       })
           .then(response => {
             console.log(response)
-            this.$router.push('/')
+            this.$router.push(`/project/${response.data.project.id}/task-${response.data.id}`)
           })
           .catch(error => console.log(error.response))
 

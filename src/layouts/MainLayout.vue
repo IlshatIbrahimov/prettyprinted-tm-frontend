@@ -122,6 +122,14 @@
             </b-button>
           </b-form-group>
         </b-form>
+
+        <div
+            class="auth__invalid"
+            v-if="errorNameProject"
+        >
+          <p>This name is already used!</p>
+        </div>
+
       </b-modal>
     </div><!-- /.modal-create-project -->
 
@@ -152,6 +160,7 @@ export default {
         surname: ''
       },
       users: [],
+      errorNameProject: false
     }
   },
   validations: {
@@ -190,8 +199,20 @@ export default {
     },
     async addProject(project) {
       return await ProjectService.addProject(project)
-          .then(response => response)
-          .catch(error => console.log(error.response))
+          .then(response => {
+            this.$router.push(`/project/${response.data.id}`)
+            this.errorNameProject = false
+            console.log('new project', response)
+          })
+          .catch(error => {
+            if (error.response.status === 409) {
+              console.log('wrong 409')
+              this.errorNameProject = true
+            }
+
+            console.log(error.response)
+            return error
+          })
     },
     onSubmit() {
       this.$v.project.$touch()
@@ -199,10 +220,14 @@ export default {
         return
       }
 
-      if (!this.$v.project.$invalid) this.$refs['modal-create-project'].hide()
-
-      this.addProject(this.project).then(() => this.fetchProjects())
-      this.project.name = ''
+      this.addProject(this.project)
+          .then(() => {
+            if (!this.$v.project.$invalid && !this.errorNameProject) {
+              this.$refs['modal-create-project'].hide()
+              this.fetchProjects()
+              this.project.name = ''
+            }
+          })
     }
   },
   mounted() {
@@ -212,6 +237,8 @@ export default {
     this.$root.$on('bv::modal::hide', () => {
       this.$nextTick(() => {
         this.$v.$reset()
+        this.errorNameProject = false
+        this.project.name = ''
       })
     })
   },

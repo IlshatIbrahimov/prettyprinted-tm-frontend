@@ -23,7 +23,16 @@
           <img src="../assets/img/cat.jpg" alt="sad cat">
         </div>
       </div>
-      <div v-else>Loading...</div>
+      <div v-else>
+        <div class="loader">
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__bar"></div>
+          <div class="loader__ball"></div>
+        </div>
+      </div>
     </div>
   </div>
 

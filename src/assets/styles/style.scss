@@ -57,13 +57,16 @@ body {
 .scroll {
   overflow-x: hidden;
 
+  scrollbar-color: #ACE0F1 #F7F8FC;
+  scrollbar-width: thin;
+
   &::-webkit-scrollbar {
     width: .4rem;
     background-color: #F7F8FC;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color:  #ACE0F1;
+    background-color: #ace0f1;
     border-radius: .7rem;
   }
 }
@@ -82,9 +85,10 @@ body {
   text-align: left;
 
   border-radius: .6rem;
-  background: #2c3e50;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #3498db, #2c3e50);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #3498db, #2c3e50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  //background: #2c3e50;  /* fallback for old browsers */
+  //background: -webkit-linear-gradient(to bottom, #3498db, #2c3e50);  /* Chrome 10-25, Safari 5.1-6 */
+  //background: linear-gradient(to bottom, #3498db, #2c3e50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(135deg, #2193b0, #6dd5ed);
 
   &:before {
     content: '';
@@ -145,6 +149,7 @@ body {
 @import './src/assets/styles/blocks/form';
 @import './src/assets/styles/blocks/createTask';
 @import './src/assets/styles/blocks/comments';
+@import './src/assets/styles/blocks/loader';
 
 @import './src/assets/styles/helpers';
 
