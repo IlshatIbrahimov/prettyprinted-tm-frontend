@@ -1,8 +1,5 @@
-import { hyphenate } from 'hyphen/ru'
+import { hyphenateSync } from 'hyphen/ru'
 
-export default async function(text) {
-  const res = await hyphenate(text)
-    .then(result => result)
-
-  return res;
+export default function(text) {
+  return hyphenateSync(text)
 }

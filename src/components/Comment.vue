@@ -3,7 +3,7 @@
     <div v-if="comments.length">
       <div
           class="comments__item"
-          v-for="(comment, index) in comments"
+          v-for="comment in comments"
           :key="comment.id"
       >
         <div class="comments__left">
@@ -53,7 +53,11 @@
       <p>No comments yet. Be the first!</p>
     </div>
 
-    <b-form class="form p-0 mt-5" @submit.prevent="addMessage">
+    <b-form
+        class="form p-0 mt-5"
+        @submit.prevent="addMessage"
+        @keypress.enter.prevent="addMessage"
+    >
       <div class="form__item">
         <b-form-textarea
             class="form__textarea-field"
@@ -82,7 +86,6 @@ export default {
   data() {
     return {
       content: '',
-      msg: ''
     }
   },
   props: {
@@ -115,15 +118,12 @@ export default {
           res + commentDate.toLocaleString('en', {month: 'short'}) + ' ' +
           commentDate.getDate() + ' ' + commentDate.toLocaleString('ru', {hour: '2-digit', minute: '2-digit'})
       )
-
-    },
-    async hyphenpoly(text, index) {
-      const res = await hyphen(text);
-      this.$emit('hyphenpoly', {text: res, index})
     },
     urlify(text) {
+      let message = hyphen(text);
+
       let urlRegex = /^(?:([a-z]+):(?:([a-z]*):)?\/\/)?(?:([^:@]*)(?::([^:@]*))?@)?((?:[a-z0-9_-]+\.)+[a-z]{2,}|localhost|(?:(?:[01]?\d\d?|2[0-4]\d|25[0-5])\.){3}(?:(?:[01]?\d\d?|2[0-4]\d|25[0-5])))(?::(\d+))?(?:([^:\?\#]+))?(?:\?([^\#]+))?(?:\#([^\s]+))?$/i;
-      return text.replace(urlRegex, function (url) {
+      return message.replace(urlRegex, function (url) {
 
         if (!(url.indexOf('//') + 1)) {
           url = 'https://' + url
