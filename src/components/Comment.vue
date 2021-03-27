@@ -56,7 +56,8 @@
     <b-form
         class="form p-0 mt-5"
         @submit.prevent="addMessage"
-        @keypress.enter.prevent="addMessage"
+        @keyup.enter.exact="addMessage"
+        @keydown.enter.exact.prevent
     >
       <div class="form__item">
         <b-form-textarea
