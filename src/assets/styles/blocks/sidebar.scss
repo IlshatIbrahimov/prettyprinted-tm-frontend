@@ -1,9 +1,9 @@
 .sidebar {
+  padding: 0 1.5rem;
   width: 25%;
 
   display: flex;
   flex-direction: column;
-  padding: 0 1.5rem;
   min-height: 100vh;
 
   font-family: 'Comfortaa', sans-serif;
@@ -31,19 +31,15 @@
 
 .sidebar__header,
 .sidebar__footer {
-  height: 10vh;
+  height: 10%;
 }
 
 .sidebar__content {
-  height: 80vh;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  margin: 3rem 0;
+  height: 80%;
 }
 
 .sidebar__content-btn {
-  margin: 1rem auto 0 auto;
   display: block;
 
   font-size: 1.6rem;
@@ -70,11 +66,14 @@
 }
 
 .sidebar__content-item {
-  max-height: 43%!important;
   width: 100%;
   height: 43%;
 
   overflow: hidden;
+
+  & + & {
+    margin-top: 6rem;
+  }
 }
 
 .sidebar__list {
