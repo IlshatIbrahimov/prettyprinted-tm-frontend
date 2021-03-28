@@ -7,7 +7,7 @@
       </div>
 
       <div class="sidebar__content">
-        <div class="sidebar__content-item">
+        <div class="sidebar__content-item sidebar__content-item--projects">
           <h3 class="sidebar__content-title">Projects <span>{{ projects.length }}</span></h3>
           <ul class="sidebar__list sidebar__list--project scroll">
             <li
@@ -31,7 +31,7 @@
           </div>
         </div>
 
-        <div class="sidebar__content-item">
+        <div class="sidebar__content-item sidebar__content-item--users">
           <h3 class="sidebar__content-title">Co-Workers <span>{{ users.length }}</span></h3>
           <ul class="sidebar__list scroll">
             <li
