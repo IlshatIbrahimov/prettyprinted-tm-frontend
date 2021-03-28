@@ -24,19 +24,23 @@
               <small v-if="comment.updateType === 'Assignee'">
                 <span>{{ comment.updateType }}:</span>
                 <span>
-                <span class="comments__action-item comments__action-item--arrow">{{
-                    comment.updateFrom.name
-                  }}</span>
-                <span class="comments__action-item">{{ comment.updateTo.name }}</span>
-              </span>
+                  <span
+                      class="comments__action-item"
+                      :title="comment.updateFrom.name + ' ' + comment.updateFrom.surname"
+                  >{{ comment.updateFrom.name }}</span>
+                  <span class="comments__action-item--arrow"></span>
+                  <span class="comments__action-item">{{ comment.updateTo.name }}</span>
+                </span>
               </small>
 
               <small v-else>
                 <span>{{ comment.updateType }}:</span>
                 <span>
-                <span class="comments__action-item comments__action-item--arrow">{{ comment.from.name }}</span>
-                <span class="comments__action-item">{{ comment.to.name }}</span>
-              </span>
+                  <span
+                      class="comments__action-item">{{ comment.from.name }}</span>
+                  <span class="comments__action-item--arrow"></span>
+                  <span class="comments__action-item">{{ comment.to.name }}</span>
+                </span>
               </small>
             </template>
 

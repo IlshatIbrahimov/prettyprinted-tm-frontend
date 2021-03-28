@@ -43,6 +43,8 @@ import Search from '../components/Search'
 import Tasks from '../components/Tasks'
 import TaskService from '../services/TaskService'
 import FilterTasks from '../middlewares/filter'
+import SockJS from 'sockjs-client'
+import Stomp from 'webstomp-client'
 
 export default {
   data() {
@@ -50,7 +52,14 @@ export default {
       tasks: [],
       flag: false,
       foundTasks: [],
-      filterOptions: {}
+      filterOptions: {},
+      user: {
+        name: '',
+        surname: '',
+        id: null
+      },
+      socket: {},
+      stompClient: {}
     }
   },
   components: {
@@ -77,14 +86,40 @@ export default {
       this.filterOptions = {}
       this.foundTasks = []
       this.flag = false
-    }
+    },
+    connect() {
+      const options = {debug: false, protocols: Stomp.VERSIONS.supportedProtocols()}
+      this.socket = new SockJS(`${this.$root.url}/ws`)
+      this.stompClient = Stomp.over(this.socket, options)
+      this.stompClient.connect(
+          {},
+          frame => {
+            this.stompClient.subscribe(`/user/assignee/${this.getAuthUser.id}`, async () => {
+              await this.getTasks()
+            })
+          },
+          error => {
+            console.log(error)
+          }
+      )
+    },
   },
   mounted() {
     this.getTasks()
+    this.connect()
+  },
+  beforeDestroy() {
+    this.stompClient.disconnect(() => {
+      console.log('disconnect');
+    })
   },
   computed: {
     Tasks() {
       return this.foundTasks.length || this.flag ? this.foundTasks : this.tasks
+    },
+    getAuthUser() {
+      console.log(JSON.parse(localStorage.getItem('user')))
+      return this.user = JSON.parse(localStorage.getItem('user'))
     }
   }
 }
