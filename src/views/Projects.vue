@@ -89,6 +89,8 @@ import Search from '../components/Search'
 import Tasks from '../components/Tasks'
 import Comment from '../components/Comment'
 import FilterTasks from '../middlewares/filter'
+import SockJS from 'sockjs-client'
+import Stomp from 'webstomp-client'
 
 export default {
   name: 'Projects',
@@ -107,6 +109,9 @@ export default {
       flag: false,
 
       active: 'tasks',
+
+      socket: {},
+      stompClient: {}
     }
   },
   components: {
@@ -163,15 +168,37 @@ export default {
       this.foundTasks = []
       this.flag = false
     },
+    connect() {
+      const options = {debug: false, protocols: Stomp.VERSIONS.supportedProtocols()}
+      this.socket = new SockJS(`${this.$root.url}/ws`)
+      this.stompClient = Stomp.over(this.socket, options)
+      this.stompClient.connect(
+          {},
+          frame => {
+            this.stompClient.subscribe(`/project/update/${this.$route.params.id}`, async () => {
+              await this.fetchProject()
+            })
+          },
+          error => {
+            console.log(error)
+          }
+      )
+    },
   },
   mounted() {
     this.fetchProject()
     this.fetchUsers()
+    this.connect()
   },
   beforeRouteUpdate(to, from, next) {
     this.reset()
     next()
     this.fetchProject()
+  },
+  beforeDestroy() {
+    this.stompClient.disconnect(() => {
+      console.log('disconnect');
+    })
   },
   computed: {
     tasks() {
