@@ -22,11 +22,13 @@
               </router-link>
             </li>
           </ul>
-          <button
-              class="button sidebar__content-btn"
-              v-b-modal.modal-create-project
-          >Add project
-          </button>
+          <div class="mt-2" style="display: flex; justify-content: center;">
+            <button
+                class="button sidebar__content-btn"
+                v-b-modal.modal-create-project
+            >Add project
+            </button>
+          </div>
         </div>
 
         <div class="sidebar__content-item">
