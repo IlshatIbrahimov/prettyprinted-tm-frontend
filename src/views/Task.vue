@@ -24,7 +24,7 @@
             ></button>
             <b-button
                 class="task__header-btn task__header-btn--delete"
-                @click.prevent="deleteTask"
+                v-b-modal.modal-alert
             ></b-button>
           </div>
         </div>
@@ -154,17 +154,67 @@
       </div>
     </div>
     <!-- /.task -->
+
+    <b-modal
+        id="modal-alert"
+        title="Warning"
+        hide-footer
+        title-class="text-center modal-title font-family--title"
+        header-class="help-header"
+    >
+      <p class="my-4 d-flex justify-content-center font-family--text">
+        Are you sure you want to delete this task?
+      </p>
+      <hr>
+      <div class="d-flex justify-content-center">
+        <b-button
+            variant="outline-danger"
+            @click.prevent="deleteTask"
+            class="mr-3"
+            size="lg"
+        >Delete</b-button>
+        <b-button
+            variant="outline-success"
+            class="ml-3"
+            @click="$bvModal.hide('modal-alert')"
+            size="lg"
+        >Cancel</b-button>
+      </div>
+    </b-modal>
+
+    <b-modal
+        id="modal-task-delete"
+        title="This task was deleted"
+        title-class="text-center modal-title font-family--title"
+        header-class="help-header"
+        hide-header-close
+        no-close-on-esc
+        no-close-on-backdrop
+        centered
+        hide-footer
+    >
+      <div class="d-flex justify-content-center">
+        <b-button
+            size="lg"
+            variant="outline-secondary"
+            @click.prevent="taskDeleted">OK</b-button
+        >
+      </div>
+    </b-modal>
+
   </div>
   <!-- div -->
 </template>
 
 <script>
+import {validationMixin} from 'vuelidate'
+import {maxLength, required} from 'vuelidate/lib/validators'
 import UserService from '../services/UserService'
 import TaskService from '../services/TaskService'
 import CommentService from '../services/CommentService'
 import Comment from '../components/Comment'
-import {validationMixin} from 'vuelidate'
-import {maxLength, required} from "vuelidate/lib/validators"
+import SockJS from 'sockjs-client'
+import Stomp from 'webstomp-client'
 
 export default {
   name: 'Task',
@@ -211,7 +261,9 @@ export default {
       },
 
       isEdit: false,
-      comment: ''
+      comment: '',
+      socket: {},
+      stompClient: {}
     }
   },
   components: {
@@ -275,11 +327,15 @@ export default {
       await TaskService.deleteTask(this.$route.params.id)
           .then(response => {
             if (response.status === 200) {
+              this.stompClient.unsubscribe('delete', () => {})
               this.$router.push(`/project/${this.$route.params.projectId}`)
             } else {
               console.log('Что-то пошло не так!');
             }
           })
+    },
+    taskDeleted() {
+      this.$router.push(`/project/${ this.$route.params.projectId }`)
     },
     async addComment(content) {
       await CommentService.addComment({
@@ -298,10 +354,61 @@ export default {
     editTask() {
       this.isEdit = !this.isEdit
     },
+    connect() {
+      const options = {debug: false, protocols: Stomp.VERSIONS.supportedProtocols()}
+      this.socket = new SockJS(`${this.$root.url}/ws`)
+      this.stompClient = Stomp.over(this.socket, options)
+      this.stompClient.connect(
+          {},
+          frame => {
+            this.stompClient.subscribe(`/task/update/${this.$route.params.id}`, async () => {
+              await this.fetchTask()
+            })
+            this.stompClient.subscribe(`/task/delete/${this.$route.params.id}`, async () => {
+              this.$bvModal.show('modal-task-delete')
+            }, { id: 'delete' })
+          },
+          error => {
+            console.log(error)
+          }
+      )
+    },
   },
   mounted() {
     this.fetchTask()
     this.fetchUsers()
+    this.connect()
+  },
+  beforeDestroy() {
+    this.stompClient.disconnect(() => {
+      console.log('disconnect');
+    })
   }
 }
 </script>
+
+<style lang="scss">
+  .font-family {
+    &--title {
+      display: inline-block;
+
+      font-family: 'Roboto', sans-serif;
+      font-weight: bold;
+
+      position: absolute;
+      left: 0;
+      right: 0;
+
+      margin: auto;
+    }
+
+    &--text {
+      font-family: 'Comfortaa', sans-serif;
+    }
+  }
+
+  .help-header {
+    position: relative;
+    min-height: 36px;
+  }
+</style>

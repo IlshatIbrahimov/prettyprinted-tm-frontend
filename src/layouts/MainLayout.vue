@@ -141,10 +141,12 @@
 </template>
 
 <script>
-import ProjectService from "../services/ProjectService"
-import UserService from "../services/UserService";
 import {validationMixin} from "vuelidate"
 import {required, minLength, maxLength} from "vuelidate/lib/validators"
+import SockJS from 'sockjs-client'
+import Stomp from 'webstomp-client'
+import ProjectService from "../services/ProjectService"
+import UserService from "../services/UserService"
 
 export default {
   name: 'MainLayout',
@@ -157,10 +159,13 @@ export default {
       projects: [],
       user: {
         name: '',
-        surname: ''
+        surname: '',
+        id: null
       },
       users: [],
-      errorNameProject: false
+      errorNameProject: false,
+      socket: {},
+      stompClient: {}
     }
   },
   validations: {
@@ -173,6 +178,29 @@ export default {
     }
   },
   methods: {
+    connect() {
+      const options = {
+        debug: true,
+        protocols: Stomp.VERSIONS.supportedProtocols()
+      }
+      this.socket = new SockJS(`${this.$root.url}/ws`)
+      this.stompClient = Stomp.over(this.socket, options)
+
+      this.stompClient.connect(
+          {},
+          frame => {
+            this.stompClient.subscribe('/user/registered/', async () => {
+              await this.fetchUsers()
+            })
+            this.stompClient.subscribe('/project/', async () => {
+              await this.fetchProjects()
+            })
+          },
+          error => {
+            console.log(error)
+          }
+      )
+    },
     logout() {
       localStorage.removeItem('jwt')
       localStorage.removeItem('user')
@@ -224,15 +252,21 @@ export default {
           .then(() => {
             if (!this.$v.project.$invalid && !this.errorNameProject) {
               this.$refs['modal-create-project'].hide()
-              this.fetchProjects()
+              // this.fetchProjects()
               this.project.name = ''
             }
           })
     }
   },
+  computed: {
+    getAuthUser() {
+      return this.user = JSON.parse(localStorage.getItem('user'))
+    }
+  },
   mounted() {
     this.fetchProjects()
     this.fetchUsers()
+    this.connect()
 
     this.$root.$on('bv::modal::hide', () => {
       this.$nextTick(() => {
@@ -242,10 +276,10 @@ export default {
       })
     })
   },
-  computed: {
-    getAuthUser() {
-      return this.user = JSON.parse(localStorage.getItem('user'))
-    }
+  beforeDestroy() {
+    this.stompClient.disconnect(() => {
+      console.log('disconnect');
+    })
   }
 }
 </script>

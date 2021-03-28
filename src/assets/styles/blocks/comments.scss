@@ -78,7 +78,7 @@
 
 .comments__text {
   white-space: pre-wrap;
-  word-break: break-all;
+  word-break: break-word;
 
   font-family: 'Roboto', sans-serif;
   font-size: 1.8rem;
@@ -133,7 +133,12 @@
 }
 
 .comments__action-item {
-  display: inline-block;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  display: inline-flex;
   margin: 0 1.5rem;
 
   &--arrow {
@@ -144,14 +149,13 @@
       margin: auto 1rem;
 
       display: inline-block;
-
       width: 15px;
       height: 5px;
 
       position: absolute;
       top: 0;
       bottom: 0;
-      right: -3.3rem;
+      left: -1.65rem;
 
       background-color: transparent;
       background-image: url('../img/arrow-right.svg');
