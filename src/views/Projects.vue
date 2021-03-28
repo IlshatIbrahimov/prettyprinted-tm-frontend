@@ -146,7 +146,6 @@ export default {
         id: this.project.id
       })
           .then(response => {
-            this.fetchProject()
             return response
           })
           .catch(error => error)
@@ -192,7 +191,12 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     this.reset()
+    this.stompClient.disconnect(() => {
+      console.log('disconnect');
+    })
     next()
+
+    this.connect()
     this.fetchProject()
   },
   beforeDestroy() {
