@@ -32,18 +32,28 @@
         </div>
 
         <div class="sidebar__content-item sidebar__content-item--users">
-          <h3 class="sidebar__content-title">Co-Workers <span>{{ users.length }}</span></h3>
+          <h3 class="sidebar__content-title">Co-Workers <span>{{ users.length - 1 }}</span></h3>
           <ul class="sidebar__list scroll">
             <li
                 class="sidebar__list-item sidebar__list-item--users"
                 v-for="(user, idx) in users"
                 :key="idx"
+
+                v-if="user.id !== getAuthUser.id"
             >
               <span class="avatar">
                 <small>{{ user.name.slice(0, 1).toUpperCase() }}</small>
                 <small>{{ user.surname.slice(0, 1).toUpperCase() }}</small>
               </span>
               <span class="sidebar__list-item-user">{{ user.name }} {{ user.surname }}</span>
+
+              <span class="pl-4">
+                <router-link
+                    tag="a"
+                    :to="`/im/${user.id}`"
+                    class="sidebar__list-item-msg"
+                ></router-link>
+              </span>
             </li>
           </ul>
         </div>
