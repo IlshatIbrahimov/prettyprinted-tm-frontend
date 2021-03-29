@@ -1,8 +1,8 @@
 export default {
   name: '',
   surname: '',
-  url: 'http://localhost:8080',
-  // url: 'https://prettyprinted-tm-backend.herokuapp.com',
+  // url: 'http://localhost:8080',
+  url: 'https://prettyprinted-tm-backend.herokuapp.com',
   // url: 'https://pp-taskmanager-backend.herokuapp.com',
   attributes: {
     priority: {
