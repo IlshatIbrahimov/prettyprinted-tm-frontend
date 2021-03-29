@@ -4,7 +4,11 @@
 
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+
+  position: sticky;
+  left: 0;
+  overflow: auto;
 
   font-family: 'Comfortaa', sans-serif;
   background-color: #f7f8fc;
@@ -36,7 +40,7 @@
 
 .sidebar__content {
   margin: 3rem 0;
-  height: 80%;
+  height: 75%;
 }
 
 .sidebar__content-btn {
@@ -67,12 +71,18 @@
 
 .sidebar__content-item {
   width: 100%;
-  height: 43%;
-
   overflow: hidden;
 
+  &--projects {
+    height: 55%;
+  }
+
+  &--users {
+    height: 40%;
+  }
+
   & + & {
-    margin-top: 6rem;
+    margin-top: 3rem;
   }
 }
 
