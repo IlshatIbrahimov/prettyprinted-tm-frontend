@@ -116,6 +116,8 @@ export default {
       )
     },
     async fetchGetPrivate() {
+      console.log("IDDDDDDDDDDDD", this.$route.params.id)
+
       const res = await PrivateService.getPrivate(this.$route.params.id)
         .then(response => {
           this.privateMessage = {...response.data}
@@ -173,8 +175,8 @@ export default {
     })
     next()
 
-    this.connect()
     this.fetchGetPrivate()
+    this.connect()
   },
   beforeDestroy() {
     this.stompClient.disconnect(() => {
