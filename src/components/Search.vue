@@ -138,7 +138,6 @@ export default {
       this.$emit('filter', {name, valueAttr})
     },
     reset() {
-      this.search = ''
       for(const value in this.keys) {
         this.keys[value] = 'default'
       }

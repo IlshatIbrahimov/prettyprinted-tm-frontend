@@ -125,6 +125,7 @@
 .sidebar__list-item--users {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   & + & {
     margin-top: .5rem;
@@ -141,6 +142,20 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.sidebar__list-item-msg {
+  display: flex;
+
+  width: 30px;
+  height: 25px;
+
+  background: url("../img/msg.svg") no-repeat center;
+  background-size: 30px 25px;
+
+  &:hover {
+    background-color: unset!important;
+  }
 }
 
 .sidebar__footer {
