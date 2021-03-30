@@ -1,10 +1,14 @@
 .sidebar {
+  padding: 0 1.5rem;
   width: 25%;
 
   display: flex;
   flex-direction: column;
-  padding: 0 1.5rem;
-  min-height: 100vh;
+  height: 100vh;
+
+  position: sticky;
+  left: 0;
+  overflow: auto;
 
   font-family: 'Comfortaa', sans-serif;
   background-color: #f7f8fc;
@@ -31,19 +35,15 @@
 
 .sidebar__header,
 .sidebar__footer {
-  height: 10vh;
+  height: 10%;
 }
 
 .sidebar__content {
-  height: 80vh;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  margin: 3rem 0;
+  height: 75%;
 }
 
 .sidebar__content-btn {
-  margin: 1rem auto 0 auto;
   display: block;
 
   font-size: 1.6rem;
@@ -70,18 +70,27 @@
 }
 
 .sidebar__content-item {
-  max-height: 43%!important;
   width: 100%;
-  height: 43%;
-
   overflow: hidden;
+
+  &--projects {
+    height: 55%;
+  }
+
+  &--users {
+    height: 40%;
+  }
+
+  & + & {
+    margin-top: 3rem;
+  }
 }
 
 .sidebar__list {
   max-height: 80%;
 
   &--project {
-    max-height: 70%;
+    max-height: 65%;
   }
 
   &-item {
@@ -116,6 +125,7 @@
 .sidebar__list-item--users {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   & + & {
     margin-top: .5rem;
@@ -132,6 +142,20 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.sidebar__list-item-msg {
+  display: flex;
+
+  width: 30px;
+  height: 25px;
+
+  background: url("../img/msg.svg") no-repeat center;
+  background-size: 30px 25px;
+
+  &:hover {
+    background-color: unset!important;
+  }
 }
 
 .sidebar__footer {

@@ -54,7 +54,16 @@ const routes = [
       title: 'Task Manager'
     },
     component: () => import('../views/Task.vue')
-  }
+  },
+  {
+    path: '/im/:id',
+    name: 'Private',
+    meta: {
+      requiresAuth: true,
+      layout: 'main'
+    },
+    component: () => import('../views/Private.vue')
+  },
 ]
 
 const router = new VueRouter({
